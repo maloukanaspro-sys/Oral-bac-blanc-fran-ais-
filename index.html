@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon Oral de Français – EAF 2026</title>
+<style>/* system fonts */</style>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131c;
+    --surface2: #1c1c2e;
+    --accent: #7c3aed;
+    --accent2: #a855f7;
+    --accent3: #ec4899;
+    --gold: #f59e0b;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #2d2d45;
+    --green: #10b981;
+    --blue: #3b82f6;
+    --red: #ef4444;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; line-height:1.7; min-height:100vh; }
+
+  /* NAV */
+  nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; position: sticky; top:0; z-index:100; backdrop-filter: blur(10px); }
+  .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; color: var(--accent2); white-space:nowrap; }
+  .nav-links { display:flex; gap:0.5rem; flex-wrap:wrap; }
+  .nav-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 0.3rem 0.8rem; border-radius:6px; cursor:pointer; font-size:0.78rem; font-family:'DM Sans',sans-serif; transition: all 0.2s; white-space:nowrap; }
+  .nav-btn:hover, .nav-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* PAGES */
+  .page { display:none; padding: 2rem; max-width: 900px; margin: 0 auto; }
+  .page.active { display:block; }
+
+  /* HERO */
+  .hero { text-align:center; padding: 3rem 1rem 2rem; }
+  .hero h1 { font-family:'Syne',sans-serif; font-size:2.8rem; font-weight:800; background: linear-gradient(135deg, var(--accent2), var(--accent3)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1.2; margin-bottom:0.5rem; }
+  .hero p { color: var(--muted); font-size:1.1rem; margin-bottom:2rem; }
+
+  /* CARDS GRID */
+  .cards-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:1rem; margin-top:1.5rem; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius:12px; padding:1.2rem; cursor:pointer; transition: all 0.2s; }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(124,58,237,0.2); }
+  .card-tag { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; padding: 0.2rem 0.6rem; border-radius:4px; margin-bottom:0.7rem; display:inline-block; }
+  .tag-poesie { background: rgba(168,85,247,0.2); color: var(--accent2); }
+  .tag-idees { background: rgba(59,130,246,0.2); color: var(--blue); }
+  .tag-roman { background: rgba(245,158,11,0.2); color: var(--gold); }
+  .tag-theatre { background: rgba(16,185,129,0.2); color: var(--green); }
+  .tag-parcours { background: rgba(236,72,153,0.2); color: var(--accent3); }
+  .card h3 { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; margin-bottom:0.3rem; }
+  .card p { font-size:0.82rem; color: var(--muted); }
+
+  /* SECTION TITLES */
+  .section-title { font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800; margin-bottom:0.3rem; }
+  .section-subtitle { color: var(--muted); margin-bottom:1.5rem; }
+  .divider { height:1px; background: var(--border); margin: 2rem 0; }
+
+  /* ORAL STRUCTURE */
+  .timeline { display:flex; flex-direction:column; gap:1rem; }
+  .tl-item { display:flex; gap:1.2rem; align-items:flex-start; }
+  .tl-badge { min-width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:0.9rem; flex-shrink:0; }
+  .tl-prep { background: rgba(245,158,11,0.2); color: var(--gold); border: 2px solid var(--gold); }
+  .tl-exp { background: rgba(124,58,237,0.2); color: var(--accent2); border: 2px solid var(--accent2); }
+  .tl-gram { background: rgba(59,130,246,0.2); color: var(--blue); border: 2px solid var(--blue); }
+  .tl-cursive { background: rgba(16,185,129,0.2); color: var(--green); border: 2px solid var(--green); }
+  .tl-content h4 { font-family:'Syne',sans-serif; font-weight:700; margin-bottom:0.3rem; }
+  .tl-content p { font-size:0.88rem; color: var(--muted); }
+  .tl-time { font-size:0.8rem; font-weight:700; color: var(--accent2); }
+
+  /* TEXT DETAIL PAGE */
+  .back-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); padding: 0.5rem 1.2rem; border-radius:8px; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.88rem; margin-bottom:1.5rem; transition: all 0.2s; }
+  .back-btn:hover { color: var(--text); border-color: var(--accent); }
+  .text-header { background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%); border: 1px solid var(--border); border-radius:16px; padding: 1.5rem; margin-bottom:1.5rem; }
+  .text-header .author { color: var(--muted); font-size:0.9rem; margin-bottom:0.3rem; }
+  .text-header h2 { font-family:'Syne',sans-serif; font-size:1.6rem; font-weight:800; margin-bottom:0.5rem; }
+  .text-header .oeuvre { color: var(--accent2); font-size:0.88rem; font-style:italic; }
+
+  /* ORAL BLOCKS */
+  .oral-block { background: var(--surface); border: 1px solid var(--border); border-radius:12px; padding:1.3rem; margin-bottom:1rem; }
+  .oral-block-title { display:flex; align-items:center; gap:0.7rem; margin-bottom:1rem; }
+  .oral-block-icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; }
+  .oral-block-title h3 { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; }
+  .oral-block-title .timing { margin-left:auto; font-size:0.75rem; color: var(--accent2); font-weight:700; background: rgba(124,58,237,0.15); padding: 0.2rem 0.6rem; border-radius:4px; }
+  .speech { font-size:0.92rem; line-height:1.8; color: var(--text); }
+  .speech strong { color: var(--accent2); }
+  .speech em { color: var(--gold); font-style:italic; }
+  .speech .highlight { background: rgba(124,58,237,0.1); border-left: 3px solid var(--accent); padding: 0.8rem 1rem; border-radius:0 8px 8px 0; margin: 0.8rem 0; }
+  .mvt-badge { display:inline-block; background: rgba(124,58,237,0.15); border: 1px solid var(--accent); color: var(--accent2); font-size:0.75rem; font-weight:700; padding: 0.2rem 0.7rem; border-radius:4px; margin-right:0.5rem; margin-bottom:0.3rem; }
+  .tip-box { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.3); border-radius:8px; padding: 0.8rem 1rem; margin-top:0.8rem; font-size:0.83rem; color: #6ee7b7; }
+  .tip-box::before { content:"💡 "; }
+
+  /* QUIZ */
+  .quiz-container { display:flex; flex-direction:column; gap:1rem; }
+  .quiz-q { background: var(--surface); border: 1px solid var(--border); border-radius:12px; padding:1.2rem; }
+  .quiz-q .q-text { font-weight:500; margin-bottom:0.8rem; }
+  .quiz-q .q-answer { display:none; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.3); border-radius:8px; padding:0.8rem; font-size:0.88rem; color: #6ee7b7; margin-top:0.8rem; }
+  .quiz-q .q-answer.visible { display:block; }
+  .show-answer-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); padding: 0.4rem 1rem; border-radius:6px; cursor:pointer; font-size:0.82rem; font-family:'DM Sans',sans-serif; transition: all 0.2s; }
+  .show-answer-btn:hover { border-color: var(--green); color: var(--green); }
+  .show-answer-btn.shown { border-color: var(--green); color: var(--green); }
+
+  /* CURSIVE PAGE */
+  .info-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem; }
+  .info-box { background: var(--surface); border: 1px solid var(--border); border-radius:10px; padding:1rem; }
+  .info-box h4 { font-size:0.78rem; text-transform:uppercase; letter-spacing:1px; color: var(--muted); margin-bottom:0.4rem; }
+  .info-box p { font-size:0.9rem; }
+  @media(max-width:600px) { .info-grid { grid-template-columns:1fr; } .hero h1 { font-size:1.8rem; } }
+
+  /* PROGRESS DOTS */
+  .progress-bar { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+  .prog-dot { width:10px; height:10px; border-radius:50%; background: var(--border); cursor:pointer; transition: background 0.2s; }
+  .prog-dot.done { background: var(--green); }
+  .prog-dot.current { background: var(--accent2); }
+
+  /* SCROLL TO TOP */
+  .scroll-top { position:fixed; bottom:2rem; right:2rem; background: var(--accent); color:#fff; border:none; border-radius:50%; width:44px; height:44px; cursor:pointer; font-size:1.2rem; display:flex; align-items:center; justify-content:center; box-shadow: 0 4px 20px rgba(124,58,237,0.4); transition: all 0.2s; z-index:200; }
+  .scroll-top:hover { transform:translateY(-2px); background: var(--accent2); }
+
+  /* Animations */
+  @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+  .page.active { animation: fadeIn 0.3s ease; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">📚 EAF 2026</span>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="showPage('home')">Accueil</button>
+    <button class="nav-btn" onclick="showPage('methode')">⏱ Méthode</button>
+    <button class="nav-btn" onclick="showPage('textes')">📖 Textes</button>
+    <button class="nav-btn" onclick="showPage('cursive')">📕 Lecture cursive</button>
+    <button class="nav-btn" onclick="showPage('quiz')">❓ Quiz Antigone</button>
+    <button class="nav-btn" onclick="showPage('grammaire')">📐 Grammaire</button>
+    <button class="nav-btn" onclick="showPage('fiches')">🗂 Fiches</button>
+    <button class="nav-btn" onclick="showPage('resumes')">📝 Résumés</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <h1>Mon Oral de Français</h1>
+    <p>Lycée Albert Camus · 1STI2D · Session 2026</p>
+  </div>
+
+  <div class="oral-block" style="margin-bottom:1.5rem; border-color: var(--gold);">
+    <div class="oral-block-title">
+      <div class="oral-block-icon" style="background:rgba(245,158,11,0.2);">⚡</div>
+      <h3 style="color:var(--gold);">L'essentiel à retenir</h3>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.8rem; text-align:center;">
+      <div style="background:var(--surface2); border-radius:10px; padding:1rem;">
+        <div style="font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; color:var(--gold);">30</div>
+        <div style="font-size:0.8rem; color:var(--muted);">min de prépa</div>
+      </div>
+      <div style="background:var(--surface2); border-radius:10px; padding:1rem;">
+        <div style="font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; color:var(--accent2);">20</div>
+        <div style="font-size:0.8rem; color:var(--muted);">min à l'oral</div>
+      </div>
+      <div style="background:var(--surface2); border-radius:10px; padding:1rem;">
+        <div style="font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; color:var(--green);">12</div>
+        <div style="font-size:0.8rem; color:var(--muted);">textes au programme</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Tous les textes</h2>
+  <p class="section-subtitle">Clique sur un texte pour voir l'oral complet prêt à dire</p>
+
+  <div style="margin-bottom:0.5rem; font-size:0.85rem; color:var(--muted);">📜 POÉSIE – Rimbaud, Les Cahiers de Douai · Parcours : Émancipations créatrices</div>
+  <div class="cards-grid">
+    <div class="card" onclick="showText('venus')">
+      <span class="card-tag tag-poesie">Poésie</span>
+      <h3>Vénus Anadyomène</h3>
+      <p>Rimbaud · 1870 · Sonnet subversif</p>
+    </div>
+    <div class="card" onclick="showText('musique')">
+      <span class="card-tag tag-poesie">Poésie</span>
+      <h3>À la musique</h3>
+      <p>Rimbaud · 1870 · Satire bourgeoise</p>
+    </div>
+    <div class="card" onclick="showText('reve')">
+      <span class="card-tag tag-parcours">Parcours Poésie</span>
+      <h3>Un Rêve</h3>
+      <p>Aloysius Bertrand · Gaspard de la nuit</p>
+    </div>
+  </div>
+
+  <div style="margin-top:1.5rem; margin-bottom:0.5rem; font-size:0.85rem; color:var(--muted);">💡 LITTÉRATURE D'IDÉES – La Boétie, Discours de la servitude volontaire · Parcours : Défendre et entretenir la liberté</div>
+  <div class="cards-grid">
+    <div class="card" onclick="showText('boetie1')">
+      <span class="card-tag tag-idees">Lit. d'Idées</span>
+      <h3>Pauvres et misérables peuples</h3>
+      <p>La Boétie · Texte 1 · Appel au peuple</p>
+    </div>
+    <div class="card" onclick="showText('boetie2')">
+      <span class="card-tag tag-idees">Lit. d'Idées</span>
+      <h3>Deux Spartiates</h3>
+      <p>La Boétie · Texte 2 · Sperte et Bulis</p>
+    </div>
+    <div class="card" onclick="showText('loup')">
+      <span class="card-tag tag-parcours">Parcours Idées</span>
+      <h3>Le Loup et le Chien</h3>
+      <p>La Fontaine · Fables, I, 5 · 1668</p>
+    </div>
+  </div>
+
+  <div style="margin-top:1.5rem; margin-bottom:0.5rem; font-size:0.85rem; color:var(--muted);">📖 ROMAN – Abbé Prévost, Manon Lescaut · Parcours : Personnages en marge</div>
+  <div class="cards-grid">
+    <div class="card" onclick="showText('manon1')">
+      <span class="card-tag tag-roman">Roman</span>
+      <h3>La Rencontre de Manon</h3>
+      <p>Abbé Prévost · 1731 · Coup de foudre</p>
+    </div>
+    <div class="card" onclick="showText('manon2')">
+      <span class="card-tag tag-roman">Roman</span>
+      <h3>La Mort de Manon</h3>
+      <p>Abbé Prévost · 1731 · Dénouement tragique</p>
+    </div>
+    <div class="card" onclick="showText('bouledesuif')">
+      <span class="card-tag tag-parcours">Parcours Roman</span>
+      <h3>Boule de Suif</h3>
+      <p>Maupassant · 1880 · Scène du repas</p>
+    </div>
+  </div>
+
+  <div style="margin-top:1.5rem; margin-bottom:0.5rem; font-size:0.85rem; color:var(--muted);">🎭 THÉÂTRE – Musset, On ne badine pas avec l'amour · Parcours : Les jeux du cœur et de la parole</div>
+  <div class="cards-grid">
+    <div class="card" onclick="showText('musset')">
+      <span class="card-tag tag-theatre">Théâtre</span>
+      <h3>Acte II, Scène 3</h3>
+      <p>Musset · 1834 · Perdican & Rosette</p>
+    </div>
+  </div>
+</div>
+
+<!-- METHODE -->
+<div id="page-methode" class="page">
+  <h2 class="section-title">Comment se déroule l'oral ?</h2>
+  <p class="section-subtitle">50 minutes au total · Tu peux faire ça !</p>
+
+  <div class="oral-block" style="border-color:var(--gold); margin-bottom:1.5rem;">
+    <div class="oral-block-title">
+      <div class="oral-block-icon" style="background:rgba(245,158,11,0.2); font-size:1.2rem;">🕐</div>
+      <h3 style="color:var(--gold);">AVANT L'ORAL – 30 minutes de préparation seul</h3>
+    </div>
+    <div class="speech">
+      <p>Tu entres dans une salle d'attente. L'examinateur te donne <strong>un texte parmi les 12 de ton programme</strong> + une question de grammaire. Tu as 30 minutes pour préparer ton oral sur feuille de brouillon.</p>
+      <div class="highlight">
+        ⏱ <strong>5 premières minutes :</strong> Lis le texte attentivement. Note la problématique et les 2-3 mouvements du texte.<br>
+        ⏱ <strong>15 minutes suivantes :</strong> Pour chaque mouvement, note 2-3 procédés littéraires et ce qu'ils montrent.<br>
+        ⏱ <strong>5 minutes :</strong> Prépare ta question de grammaire.<br>
+        ⏱ <strong>5 dernières minutes :</strong> Note quelques idées pour ta lecture cursive (Antigone).
+      </div>
+      <div class="tip-box">Tu peux garder le texte avec toi pendant l'oral. Appuie-toi dessus !</div>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-badge tl-exp">1</div>
+      <div class="tl-content">
+        <div class="tl-time">~10 minutes · 10 points</div>
+        <h4>Explication linéaire</h4>
+        <p>Tu lis le texte à voix haute (expressif !), puis tu fais ton explication en suivant l'ordre du texte. Tu commences par une introduction (auteur, œuvre, contexte, problématique, annonce des mouvements), puis tu analyses chaque mouvement avec des procédés littéraires et leur effet.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-badge tl-gram">2</div>
+      <div class="tl-content">
+        <div class="tl-time">~2 minutes · 2 points</div>
+        <h4>Question de grammaire</h4>
+        <p>L'examinateur te pose une question sur une phrase du texte (identifier une proposition, une figure de style, une nature de mot…). C'est court, ne panique pas.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-badge tl-cursive">3</div>
+      <div class="tl-content">
+        <div class="tl-time">~8 minutes · 8 points</div>
+        <h4>Entretien sur ta lecture cursive (Antigone)</h4>
+        <p>Tu présentes ton œuvre pendant ~2-3 minutes (pourquoi tu l'as choisie, les thèmes, ce qui t'a marqué, le lien avec le parcours). Ensuite l'examinateur te pose des questions pendant ~5-6 minutes. Tu peux avoir le livre avec toi !</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3 style="font-family:'Syne',sans-serif; margin-bottom:1rem;">📝 Structure d'une intro (à apprendre pour chaque texte)</h3>
+  <div class="oral-block">
+    <div class="speech">
+      <p><strong>1. Présentation de l'auteur et de l'œuvre :</strong> "Nous allons étudier un extrait de [titre], œuvre de [auteur], écrite en [date]."</p>
+      <p style="margin-top:0.5rem;"><strong>2. Contexte / situation du texte :</strong> "Dans cet extrait, [résumé en 1-2 phrases de ce qui se passe]."</p>
+      <p style="margin-top:0.5rem;"><strong>3. Problématique :</strong> "Nous pouvons nous demander comment / en quoi [question centrale]."</p>
+      <p style="margin-top:0.5rem;"><strong>4. Annonce des mouvements :</strong> "Pour répondre à cette question, nous étudierons dans un premier temps [mvt 1], puis dans un second temps [mvt 2], et enfin [mvt 3]."</p>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Syne',sans-serif; margin: 1.5rem 0 1rem;">🔧 Procédés littéraires clés à connaître</h3>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
+    <div class="info-box"><h4>Figures de style</h4><p>Métaphore, comparaison, antithèse, oxymore, hyperbole, ironie, apostrophe, anaphore, gradation</p></div>
+    <div class="info-box"><h4>Syntaxe</h4><p>Phrase courte/longue, phrase interrogative/exclamative, accumulation, énumération, parallélisme</p></div>
+    <div class="info-box"><h4>Registres</h4><p>Lyrique, épique, comique, tragique, satirique, didactique, polémique, réaliste</p></div>
+    <div class="info-box"><h4>Lexique</h4><p>Champ lexical, vocabulaire mélioratif/péjoratif, niveau de langue, connotations</p></div>
+  </div>
+</div>
+
+<!-- TEXTES (liste) -->
+<div id="page-textes" class="page">
+  <h2 class="section-title">Les 12 textes</h2>
+  <p class="section-subtitle">Clique sur un texte pour voir l'oral complet</p>
+  <div class="cards-grid">
+    <div class="card" onclick="showText('venus')"><span class="card-tag tag-poesie">Poésie</span><h3>Vénus Anadyomène</h3><p>Rimbaud</p></div>
+    <div class="card" onclick="showText('musique')"><span class="card-tag tag-poesie">Poésie</span><h3>À la musique</h3><p>Rimbaud</p></div>
+    <div class="card" onclick="showText('reve')"><span class="card-tag tag-parcours">Parcours</span><h3>Un Rêve</h3><p>Aloysius Bertrand</p></div>
+    <div class="card" onclick="showText('boetie1')"><span class="card-tag tag-idees">Lit. d'Idées</span><h3>Pauvres peuples</h3><p>La Boétie</p></div>
+    <div class="card" onclick="showText('boetie2')"><span class="card-tag tag-idees">Lit. d'Idées</span><h3>Deux Spartiates</h3><p>La Boétie</p></div>
+    <div class="card" onclick="showText('loup')"><span class="card-tag tag-parcours">Parcours</span><h3>Le Loup et le Chien</h3><p>La Fontaine</p></div>
+    <div class="card" onclick="showText('manon1')"><span class="card-tag tag-roman">Roman</span><h3>La Rencontre de Manon</h3><p>Abbé Prévost</p></div>
+    <div class="card" onclick="showText('manon2')"><span class="card-tag tag-roman">Roman</span><h3>La Mort de Manon</h3><p>Abbé Prévost</p></div>
+    <div class="card" onclick="showText('bouledesuif')"><span class="card-tag tag-parcours">Parcours</span><h3>Boule de Suif</h3><p>Maupassant</p></div>
+    <div class="card" onclick="showText('musset')"><span class="card-tag tag-theatre">Théâtre</span><h3>Acte II, Scène 3</h3><p>Musset</p></div>
+  </div>
+</div>
+
+<!-- TEXT DETAIL -->
+<div id="page-text" class="page">
+  <button class="back-btn" onclick="showPage('textes')">← Retour aux textes</button>
+  <div id="text-content"></div>
+</div>
+
+<!-- CURSIVE -->
+<div id="page-cursive" class="page">
+  <h2 class="section-title">📕 Lecture cursive : Antigone</h2>
+  <p class="section-subtitle">Jean Anouilh · 1944 · Parcours : Défendre et entretenir la liberté</p>
+
+  <div class="info-grid">
+    <div class="info-box"><h4>Auteur</h4><p>Jean Anouilh (1910-1987), dramaturge français</p></div>
+    <div class="info-box"><h4>Date</h4><p>1944, pendant l'Occupation allemande</p></div>
+    <div class="info-box"><h4>Genre</h4><p>Tragédie moderne en un acte</p></div>
+    <div class="info-box"><h4>Parcours</h4><p>Défendre et entretenir la liberté</p></div>
+  </div>
+
+  <div class="oral-block" style="border-color:var(--green); margin-bottom:1rem;">
+    <div class="oral-block-title">
+      <div class="oral-block-icon" style="background:rgba(16,185,129,0.2);">🎯</div>
+      <h3>Résumé rapide</h3>
+    </div>
+    <div class="speech">
+      <p>Antigone est la fille d'Œdipe. Son frère Polynice a attaqué Thèbes et a été tué. Créon, le roi (et son oncle), ordonne de ne pas l'enterrer, sous peine de mort. Antigone brave cet interdit et enterre son frère par principe. Elle est arrêtée. Face à Créon, elle refuse de se soumettre et choisit la mort plutôt que de renier ses valeurs. Elle est emmurée vivante et se suicide.</p>
+    </div>
+  </div>
+
+  <div class="oral-block" style="margin-bottom:1rem;">
+    <div class="oral-block-title">
+      <div class="oral-block-icon" style="background:rgba(124,58,237,0.2);">💬</div>
+      <h3>Ton discours de présentation (~2-3 min)</h3>
+      <span class="timing">À dire à l'oral</span>
+    </div>
+    <div class="speech">
+      <p>J'ai choisi de lire <em>Antigone</em> de Jean Anouilh, une pièce de théâtre écrite en 1944, pendant l'Occupation allemande en France.</p>
+      <br>
+      <p>Cette œuvre m'a particulièrement touchée parce qu'elle pose une question fondamentale : <strong>jusqu'où peut-on aller pour défendre ce en quoi on croit ?</strong> Antigone choisit de mourir plutôt que d'obéir à une loi qu'elle juge injuste. C'est une figure de résistance absolue.</p>
+      <br>
+      <p>Le lien avec notre parcours "Défendre et entretenir la liberté" est évident. Comme La Boétie dans le <em>Discours de la servitude volontaire</em>, Anouilh montre que la liberté n'est pas donnée : il faut la choisir, la défendre, parfois au prix de sa vie. Antigone refuse la "servitude volontaire" que Créon lui propose – elle pourrait vivre si elle se tait – et choisit la mort libre plutôt que la vie soumise.</p>
+      <br>
+      <p>Ce qui m'a le plus marqué, c'est le personnage de Créon : il n'est pas un monstre. Il essaie même de convaincre Antigone de vivre. Mais il représente le pouvoir qui demande aux citoyens de plier, de se taire, d'accepter. Anouilh écrit cette pièce pendant l'Occupation : le message est clair, sans jamais être dit explicitement.</p>
+    </div>
+  </div>
+
+  <div class="oral-block">
+    <div class="oral-block-title">
+      <div class="oral-block-icon" style="background:rgba(245,158,11,0.2);">📌</div>
+      <h3>3 thèmes à maîtriser</h3>
+    </div>
+    <div class="speech">
+      <p><span class="mvt-badge">Thème 1</span><strong>La liberté et la résistance :</strong> Antigone incarne la résistance face au pouvoir tyrannique. Elle choisit librement sa mort, ce qui est paradoxalement un acte de liberté totale. Lien direct avec La Boétie : "Soyez décidés à ne plus servir et vous serez libres."</p>
+      <br>
+      <p><span class="mvt-badge">Thème 2</span><strong>L'individu face au pouvoir :</strong> Opposition entre la loi divine (morale intérieure d'Antigone) et la loi des hommes (décret de Créon). Créon représente la raison d'État, le pragmatisme politique.</p>
+      <br>
+      <p><span class="mvt-badge">Thème 3</span><strong>La modernisation du mythe :</strong> Anouilh réécrit la tragédie antique de Sophocle en langage moderne et contemporain (1944). Les personnages parlent comme des gens ordinaires. Cela rend le propos universel et intemporel.</p>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="page-quiz" class="page">
+  <h2 class="section-title">❓ Quiz – Questions du prof sur Antigone</h2>
+  <p class="section-subtitle">Clique sur "Voir la réponse" pour vérifier. Entraîne-toi à répondre à voix haute !</p>
+
+  <div class="quiz-container">
+    <div class="quiz-q">
+      <p class="q-text">1. Pourquoi avez-vous choisi Antigone comme lecture cursive ?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">Voir la réponse</button>
+      <div class="q-answer">J'ai choisi Antigone parce qu'elle entre parfaitement en résonance avec le parcours "Défendre et entretenir la liberté". Le personnage d'Antigone est une figure de résistance absolue : elle préfère mourir plutôt que de trahir ses convictions. Ça m'a frappé parce qu'on retrouve exactement la même idée chez La Boétie qui dit que la liberté s'obtient en refusant d'obéir. Et en plus, le contexte de 1944 (Occupation) donne à la pièce une portée politique forte.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text">2. Qui est Antigone ? Faites un rapide résumé de la pièce.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">Voir la réponse</button>
+      <div class="q-answer">Antigone est la fille d'Œdipe, roi de Thèbes. Son frère Polynice a attaqué la ville et a été tué dans la bataille. Créon, le roi et oncle d'Antigone, interdit qu'on enterre Polynice car il est considéré comme un traître. Antigone transgresse cet interdit par devoir religieux et moral. Elle est arrêtée et condamnée à mort. Malgré les tentatives de Créon de la convaincre de se soumettre, elle refuse et est emmurée vivante. Elle se suicide dans son tombeau.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text">3. Quel est le lien entre Antigone et le parcours "Défendre et entretenir la liberté" ?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">Voir la réponse</button>
+      <div class="q-answer">Le lien est direct. Antigone illustre ce que La Boétie appelle le refus de la "servitude volontaire". Créon lui offre une sortie : si elle se tait, elle vivra. Mais Antigone refuse cette liberté tronquée. Elle choisit de défendre sa liberté de conscience jusqu'à la mort. La pièce montre aussi qu'entretenir la liberté demande du courage, un sacrifice personnel, et que l'obéissance aveugle au pouvoir conduit à l'oppression – exactement ce que dénonce La Boétie.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text">4. Qui est Créon ? Est-il un personnage négatif ?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">Voir la réponse</button>
+      <div class="q-answer">Créon est le roi de Thèbes et l'oncle d'Antigone. C'est une figure ambiguë : il n'est pas un tyran cruel par nature. Il essaie même de sauver Antigone en lui expliquant les raisons politiques de son décret. Il représente le pragmatisme du pouvoir : gouverner, c'est parfois faire des choix durs. Mais Anouilh montre que ce pragmatisme finit par broyer les individus. Créon est donc plutôt une figure tragique lui aussi : il "gagne" mais perd sa femme, son fils Hémon (qui se suicide après Antigone), et se retrouve seul.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text">5. Pourquoi Antigone refuse-t-elle d'enterrer Polynice "pour de bonnes raisons" ? Qu'est-ce qui la motive vraiment ?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">Voir la réponse</button>
+      <div class="q-answer">C'est une question très intéressante que Créon lui-même lui pose dans la pièce. Il lui révèle que Polynice n'était peut-être pas si différent de l'autre frère, Étéocle. Anouilh laisse entendre qu'Antigone ne se bat pas vraiment pour Polynice en particulier – elle se bat pour le principe. Elle refuse de plier, refus une injustice, elle défend le droit de chaque être humain à une sépulture digne. Son geste est avant tout un acte de résistance morale, un "non" absolu face au pouvoir.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text">6. Quel est le contexte historique de la pièce et pourquoi est-il important ?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">Voir la réponse</button>
+      <div class="q-answer">Anouilh écrit et fait représenter Antigone en 1944, en pleine Occupation allemande. La pièce est donc à lire comme une allégorie politique : Antigone représente les résistants qui choisissent de s'opposer au pouvoir occupant malgré les risques. Créon représente ceux qui collaborent ou obéissent au nom de "l'ordre". Anouilh est habile : la pièce est assez ambiguë pour avoir pu être jouée devant la censure nazie, mais le public français y lisait clairement un message de résistance.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text">7. Qu'est-ce qui vous a le plus marqué dans cette œuvre ?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">Voir la réponse</button>
+      <div class="q-answer">Ce qui m'a le plus marqué, c'est la scène centrale entre Antigone et Créon. On s'attendrait à un méchant face à un héros, mais c'est beaucoup plus complexe. Créon a raison sur plein de points pratiques, et pourtant on sait qu'Antigone a raison moralement. Anouilh montre qu'il n'y a pas de solution simple dans ce conflit. J'ai aussi été touché par la modernité du langage : les personnages ne parlent pas "en vieux", ils parlent comme nous, ce qui rend le drame très proche et très fort.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text">8. En quoi Antigone est-elle une héroïne tragique ?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">Voir la réponse</button>
+      <div class="q-answer">Antigone est tragique au sens classique : dès le début de la pièce, le Prologue nous annonce qu'elle va mourir. Elle n'a pas d'issue possible. La tragédie, c'est quand un personnage est enfermé dans une situation sans échappatoire, et qu'il le sait. Antigone choisit librement d'avancer vers sa mort, ce qui est paradoxalement très fort : elle est à la fois impuissante (le destin est joué) et totalement libre (elle choisit ses valeurs jusqu'au bout). Hémon, son fiancé, se suicide après elle, ce qui amplifie la dimension tragique.</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text">9. Comparez Antigone avec le personnage de La Boétie dans le Discours de la servitude volontaire.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">Voir la réponse</button>
+      <div class="q-answer">La Boétie dit dans le Discours que les peuples sont esclaves parce qu'ils acceptent de l'être. Il suffit de "ne plus soutenir" le tyran pour qu'il s'effondre. Antigone incarne exactement ce refus : elle ne soutient plus Créon, elle dit non. Là où La Boétie s'adresse à un peuple collectif, Anouilh montre un individu seul qui résiste. Les deux textes se complètent : l'un donne la théorie (la servitude est un choix), l'autre en donne l'incarnation dramatique (Antigone choisit de ne pas servir).</div>
+    </div>
+
+    <div class="quiz-q">
+      <p class="q-text">10. Cette œuvre est-elle encore d'actualité selon vous ?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">Voir la réponse</button>
+      <div class="q-answer">Oui, absolument. Les questions posées par Antigone sont intemporelles : quand faut-il obéir à la loi ? Quand faut-il désobéir pour défendre ses valeurs ? On peut penser aux lanceurs d'alerte comme Edward Snowden, ou aux militants pour des causes environnementales qui brisent délibérément la loi pour défendre un principe supérieur. Antigone est une figure qui inspire tous ceux qui refusent l'injustice légale. C'est en ça que la pièce reste très vivante aujourd'hui.</div>
+    </div>
+  </div>
+</div>
+
+<!-- GRAMMAIRE -->
+<div id="page-grammaire" class="page">
+  <h2 class="section-title">📐 Questions de grammaire</h2>
+  <p class="section-subtitle">Les 4 notions au programme · Clique sur un texte pour voir ses questions</p>
+
+  <div class="oral-block" style="border-color:var(--gold); margin-bottom:1.5rem;">
+    <div class="oral-block-title">
+      <div class="oral-block-icon" style="background:rgba(245,158,11,0.2);">⚡</div>
+      <h3 style="color:var(--gold);">Méthode en 3 étapes (toujours la même !)</h3>
+    </div>
+    <div class="speech">
+      <p><strong>1. IDENTIFIER</strong> — Je cite le passage exact, je donne la nature grammaticale : "Il s'agit d'une proposition subordonnée circonstancielle de cause, introduite par la conjonction <em>parce que</em>."</p>
+      <p style="margin-top:0.5rem;"><strong>2. ANALYSER / MANIPULER</strong> — Je prouve mon analyse en transformant la phrase : mise à la forme affirmative (pour la négation), remplacement par une autre conjonction (pour les circonstancielles), transformation directe/indirecte (pour l'interrogation).</p>
+      <p style="margin-top:0.5rem;"><strong>3. COMMENTER L'EFFET</strong> — J'explique ce que ça apporte au texte : "Cette négation restrictive insiste sur le fait que..."</p>
+      <div class="tip-box">Tu as 2 minutes max. Reste calme, prends 10 secondes pour réfléchir avant de parler. Vaut mieux dire peu mais juste.</div>
+    </div>
+  </div>
+
+  <div class="oral-block" style="margin-bottom:1rem;">
+    <div class="oral-block-title">
+      <div class="oral-block-icon" style="background:rgba(59,130,246,0.2);">📋</div>
+      <h3>Les 4 notions au programme</h3>
+    </div>
+    <div class="speech">
+      <p><span class="mvt-badge">1</span><strong>La négation</strong> — négation totale (ne…pas), partielle (ne…que = restriction), avec jamais/plus/rien/personne. Transformer en positif pour prouver.</p>
+      <p style="margin-top:0.5rem;"><span class="mvt-badge">2</span><strong>L'interrogation</strong> — directe (point d'interrogation, inversion) vs indirecte (si, ce que…). Transformer l'une en l'autre pour prouver.</p>
+      <p style="margin-top:0.5rem;"><span class="mvt-badge">3</span><strong>Subordonnée circonstancielle</strong> — introduite par une conjonction. Préciser la circonstance : temps (quand, lorsque), cause (parce que, puisque), but (pour que, afin que), concession (bien que, quoique), condition (si). On peut la déplacer ou la supprimer.</p>
+      <p style="margin-top:0.5rem;"><span class="mvt-badge">4</span><strong>Subordonnée relative</strong> — introduite par un pronom relatif (qui, que, dont, où, lequel…). Elle complète un antécédent. Donner nature + fonction + antécédent.</p>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Syne',sans-serif; margin:1.5rem 0 1rem;">Questions par texte</h3>
+  <div class="cards-grid">
+    <div class="card" onclick="showGrammar('venus')"><span class="card-tag tag-poesie">Poésie</span><h3>Vénus Anadyomène</h3><p>3 questions</p></div>
+    <div class="card" onclick="showGrammar('musique')"><span class="card-tag tag-poesie">Poésie</span><h3>À la musique</h3><p>3 questions</p></div>
+    <div class="card" onclick="showGrammar('reve')"><span class="card-tag tag-parcours">Parcours</span><h3>Un Rêve</h3><p>3 questions</p></div>
+    <div class="card" onclick="showGrammar('boetie1')"><span class="card-tag tag-idees">Lit. d'Idées</span><h3>Pauvres peuples</h3><p>4 questions</p></div>
+    <div class="card" onclick="showGrammar('boetie2')"><span class="card-tag tag-idees">Lit. d'Idées</span><h3>Deux Spartiates</h3><p>3 questions</p></div>
+    <div class="card" onclick="showGrammar('loup')"><span class="card-tag tag-parcours">Parcours</span><h3>Le Loup et le Chien</h3><p>3 questions</p></div>
+    <div class="card" onclick="showGrammar('manon1')"><span class="card-tag tag-roman">Roman</span><h3>La Rencontre de Manon</h3><p>3 questions</p></div>
+    <div class="card" onclick="showGrammar('manon2')"><span class="card-tag tag-roman">Roman</span><h3>La Mort de Manon</h3><p>3 questions</p></div>
+    <div class="card" onclick="showGrammar('bouledesuif')"><span class="card-tag tag-parcours">Parcours</span><h3>Boule de Suif</h3><p>3 questions</p></div>
+    <div class="card" onclick="showGrammar('musset')"><span class="card-tag tag-theatre">Théâtre</span><h3>Acte II, Scène 3</h3><p>3 questions</p></div>
+  </div>
+</div>
+
+<!-- GRAMMAR DETAIL -->
+<div id="page-grammar" class="page">
+  <button class="back-btn" onclick="showPage('grammaire')">← Retour à la grammaire</button>
+  <div id="grammar-content"></div>
+</div>
+
+<!-- FICHES -->
+<div id="page-fiches" class="page">
+  <h2 class="section-title">🗂 Fiches antisèches</h2>
+  <p class="section-subtitle">L'essentiel à retenir pour chaque texte · Apprends ces phrases par cœur !</p>
+
+  <!-- POÉSIE -->
+  <div style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);margin:1.5rem 0 0.7rem;">📜 Poésie – Rimbaud / Bertrand</div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-poesie" style="margin:0;">Vénus Anadyomène</span><span style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">Rimbaud · 1870</span></div>
+    <div class="speech" style="font-size:0.85rem;">
+      <p>📌 <strong>Mouvement littéraire :</strong> Réalisme poétique / proto-symbolisme. Rupture avec le Parnasse et l'idéalisme romantique.</p>
+      <p>📌 <strong>Problématique :</strong> Comment Rimbaud détourne-t-il le mythe de Vénus pour s'émanciper des codes poétiques ?</p>
+      <p>📌 <strong>Mouvement 1 (v.1-8) :</strong> Description progressive et dégradante → comparaison avec le cercueil, lexique anatomique, terme animal "échine".</p>
+      <p>📌 <strong>Mouvement 2 (v.9-14) :</strong> Chute cruelle → oxymore "Belle hideusement", ironie de "Clara Venus", ulcère final = parodie totale du mythe.</p>
+      <p>📌 <strong>Procédé clé :</strong> Oxymore + parodie mythologique.</p>
+      <p>📌 <strong>Ouverture :</strong> Lien avec <em>À la musique</em> (même ironie) / annonce la poésie moderne d'Apollinaire.</p>
+    </div>
+  </div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-poesie" style="margin:0;">À la musique</span><span style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">Rimbaud · 1870</span></div>
+    <div class="speech" style="font-size:0.85rem;">
+      <p>📌 <strong>Mouvement littéraire :</strong> Réalisme poétique / satirique. Proche de Baudelaire.</p>
+      <p>📌 <strong>Problématique :</strong> Comment Rimbaud affirme-t-il sa liberté de poète par la satire de la bourgeoisie ?</p>
+      <p>📌 <strong>Mouvement 1 (str.1-5) :</strong> Portrait collectif satirique → lexique péjoratif, portraits caricaturaux (notaire, rentiers, bourgeois à bedaine).</p>
+      <p>📌 <strong>Mouvement 2 (str.6-7) :</strong> Irruption du "Moi" → tiret de rupture, "débraillé comme un étudiant", regards "indiscrètes" = liberté vs conformisme.</p>
+      <p>📌 <strong>Procédé clé :</strong> Satire + registre réaliste + pronom "Moi" mis en valeur.</p>
+      <p>📌 <strong>Ouverture :</strong> Lien avec <em>Vénus Anadyomène</em> / Baudelaire <em>Tableaux parisiens</em>.</p>
+    </div>
+  </div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-parcours" style="margin:0;">Un Rêve</span><span style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">Bertrand · 1842</span></div>
+    <div class="speech" style="font-size:0.85rem;">
+      <p>📌 <strong>Mouvement littéraire :</strong> Romantisme fantastique. Précurseur du poème en prose → influence Baudelaire et Rimbaud.</p>
+      <p>📌 <strong>Problématique :</strong> Comment Bertrand libère-t-il la poésie des contraintes du vers à travers un univers onirique ?</p>
+      <p>📌 <strong>Mouvement 1 (§1-2) :</strong> Décor nocturne/morbide → "Il était nuit", anaphore "ainsi je raconte", registre fantastique (abbaye, glas, pénitents noirs).</p>
+      <p>📌 <strong>Mouvement 2 (§3-4) :</strong> Résolution onirique → barre brisée, torches éteintes, "je poursuivais d'autres songes vers le réveil" = liberté de l'imagination.</p>
+      <p>📌 <strong>Procédé clé :</strong> Anaphore + atmosphère gothique + poème en prose (forme = émancipation).</p>
+      <p>📌 <strong>Ouverture :</strong> Baudelaire <em>Spleen de Paris</em> / Rimbaud <em>Illuminations</em>.</p>
+    </div>
+  </div>
+
+  <!-- LITTÉRATURE D'IDÉES -->
+  <div style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--blue);margin:1.5rem 0 0.7rem;">💡 Littérature d'idées – La Boétie / La Fontaine</div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-idees" style="margin:0;">Pauvres peuples</span><span style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">La Boétie · 1576</span></div>
+    <div class="speech" style="font-size:0.85rem;">
+      <p>📌 <strong>Mouvement littéraire :</strong> Humanisme de la Renaissance (XVIe s.). Influence des Stoïciens et des Anciens.</p>
+      <p>📌 <strong>Problématique :</strong> Comment La Boétie amène-t-il les peuples à prendre conscience de leur complicité dans leur propre oppression ?</p>
+      <p>📌 <strong>Mouvement 1 :</strong> Apostrophe virulente → "Pauvres gens et misérables, peuples insensés" + tableau de spoliation (anaphore de "vos").</p>
+      <p>📌 <strong>Mouvement 2 :</strong> Questions rhétoriques → le tyran n'a "que deux yeux, deux mains" = il n'existe que par le peuple.</p>
+      <p>📌 <strong>Mouvement 3 :</strong> Appel à la liberté → "ne plus servir" (négation = solution simple), métaphore du colosse effondré.</p>
+      <p>📌 <strong>Procédé clé :</strong> Apostrophe + questions rhétoriques + paradoxe de la liberté par refus.</p>
+      <p>📌 <strong>Phrase à citer :</strong> "Soyez décidés à ne plus servir et vous serez libres."</p>
+      <p>📌 <strong>Ouverture :</strong> Antigone d'Anouilh / Le Loup et le Chien de La Fontaine.</p>
+    </div>
+  </div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-idees" style="margin:0;">Deux Spartiates</span><span style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">La Boétie · 1576</span></div>
+    <div class="speech" style="font-size:0.85rem;">
+      <p>📌 <strong>Mouvement littéraire :</strong> Humanisme de la Renaissance. Technique des <em>exempla</em> (exemples historiques antiques).</p>
+      <p>📌 <strong>Problématique :</strong> Comment La Boétie prouve-t-il que la liberté se construit par l'éducation et l'expérience ?</p>
+      <p>📌 <strong>Mouvement 1 :</strong> Indarne vs Spartiates → métaphore du "goût" de la liberté, "avec les dents et les ongles".</p>
+      <p>📌 <strong>Mouvement 2 :</strong> Caton enfant → question rhétorique "Que ne me donnez-vous un poignard ?" = indignation naturelle face au tyran.</p>
+      <p>📌 <strong>Mouvement 3 :</strong> Leçon → pitié pour ceux qui n'ont jamais connu la liberté, image du "joug au col".</p>
+      <p>📌 <strong>Procédé clé :</strong> Exempla historiques + métaphore sensorielle (goût de la liberté).</p>
+      <p>📌 <strong>Phrase à citer :</strong> "de la liberté, de son goût, de sa douceur, tu ne sais rien."</p>
+      <p>📌 <strong>Ouverture :</strong> Antigone d'Anouilh / Premier texte de La Boétie.</p>
+    </div>
+  </div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-parcours" style="margin:0;">Le Loup et le Chien</span><span style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">La Fontaine · 1668</span></div>
+    <div class="speech" style="font-size:0.85rem;">
+      <p>📌 <strong>Mouvement littéraire :</strong> Classicisme (XVIIe s.). "Plaire et instruire". Fable = récit allégorique + morale.</p>
+      <p>📌 <strong>Problématique :</strong> Comment La Fontaine illustre-t-il le dilemme entre sécurité et liberté ?</p>
+      <p>📌 <strong>Mouvement 1 (v.1-20) :</strong> Tentation du confort → contraste Loup maigre / Chien gras, Loup "humblement", accumulation des promesses.</p>
+      <p>📌 <strong>Mouvement 2 (v.21-41) :</strong> Révélation du collier → col "pelé", dialogue haché ("Quoi ? rien ? Peu de chose"), "Attaché ?" = choc, fuite finale.</p>
+      <p>📌 <strong>Procédé clé :</strong> Dialogue vivant + antithèse liberté/confort + chute ("court encor" = présent intemporel).</p>
+      <p>📌 <strong>Phrase à citer :</strong> "Cela dit, maître Loup s'enfuit, et court encor."</p>
+      <p>📌 <strong>Ouverture :</strong> La Boétie <em>Discours</em> / Antigone d'Anouilh.</p>
+    </div>
+  </div>
+
+  <!-- ROMAN -->
+  <div style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin:1.5rem 0 0.7rem;">📖 Roman – Prévost / Maupassant</div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-roman" style="margin:0;">La Rencontre de Manon</span><span style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">Abbé Prévost · 1731</span></div>
+    <div class="speech" style="font-size:0.85rem;">
+      <p>📌 <strong>Mouvement littéraire :</strong> Roman sentimental pré-romantique (XVIIIe s.). Analyse des passions intérieures.</p>
+      <p>📌 <strong>Problématique :</strong> Comment Prévost met-il en scène le coup de foudre comme une force irrésistible ?</p>
+      <p>📌 <strong>Mouvement 1 :</strong> Contexte → ironie tragique "Hélas ! que ne le marquais-je un jour plus tôt !", hasard de la rencontre.</p>
+      <p>📌 <strong>Mouvement 2 :</strong> Coup de foudre → "enflammé tout d'un coup jusqu'au transport", paradoxe du timide qui s'avance.</p>
+      <p>📌 <strong>Mouvement 3 :</strong> Dialogue → Manon "plus expérimentée", ambiguïté de sa résignation calculée.</p>
+      <p>📌 <strong>Procédé clé :</strong> Narration rétrospective (ironie tragique) + champ lexical de la passion soudaine.</p>
+      <p>📌 <strong>Phrase à citer :</strong> "je me trouvai enflammé tout d'un coup jusqu'au transport."</p>
+      <p>📌 <strong>Ouverture :</strong> La Mort de Manon (dénouement) / Boule de Suif (marginalité féminine).</p>
+    </div>
+  </div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-roman" style="margin:0;">La Mort de Manon</span><span style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">Abbé Prévost · 1731</span></div>
+    <div class="speech" style="font-size:0.85rem;">
+      <p>📌 <strong>Mouvement littéraire :</strong> Roman sentimental pré-romantique. Registre pathétique (émouvoir avec retenue).</p>
+      <p>📌 <strong>Problématique :</strong> Comment Prévost construit-il une scène pathétique qui affirme la grandeur de la passion amoureuse ?</p>
+      <p>📌 <strong>Mouvement 1 :</strong> Impossibilité du récit → "un récit qui me tue", "mon âme semble reculer d'horreur" = douleur indicible.</p>
+      <p>📌 <strong>Mouvement 2 :</strong> Agonie silencieuse → signes physiques (mains froides, soupirs), simultanéité amour/mort.</p>
+      <p>📌 <strong>Mouvement 3 :</strong> Désolation → "bouche attachée sur le visage", vouloir mourir sur sa fosse = amour absolu.</p>
+      <p>📌 <strong>Procédé clé :</strong> Ellipse narrative ("Je la perdis") + euphémisme + registre pathétique pudique.</p>
+      <p>📌 <strong>Phrase à citer :</strong> "Mon âme ne suivit pas la sienne."</p>
+      <p>📌 <strong>Ouverture :</strong> La Rencontre de Manon / Roméo et Juliette de Shakespeare.</p>
+    </div>
+  </div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-parcours" style="margin:0;">Boule de Suif – Le repas</span><span style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">Maupassant · 1880</span></div>
+    <div class="speech" style="font-size:0.85rem;">
+      <p>📌 <strong>Mouvement littéraire :</strong> Naturalisme (XIXe s.). Observation précise du réel, satire sociale, étude des milieux.</p>
+      <p>📌 <strong>Problématique :</strong> Comment Maupassant révèle-t-il l'hypocrisie bourgeoise et la supériorité morale de Boule de Suif ?</p>
+      <p>📌 <strong>Mouvement 1 :</strong> Description appétissante + regards envieux → "Tous les regards étaient tendus vers elle", mépris "féroce".</p>
+      <p>📌 <strong>Mouvement 2 :</strong> Capitulation hypocrite → Loiseau ("Madame"), contamination progressive, comparaison de Tantale pour les orgueilleux.</p>
+      <p>📌 <strong>Procédé clé :</strong> Ironie + renversement de la hiérarchie sociale + description réaliste appétissante.</p>
+      <p>📌 <strong>Phrase à citer :</strong> "Le mépris des dames pour cette fille devenait féroce, comme une envie de la tuer."</p>
+      <p>📌 <strong>Ouverture :</strong> Manon Lescaut (marginalité féminine) / Zola <em>L'Assommoir</em> (naturalisme).</p>
+    </div>
+  </div>
+
+  <!-- THÉÂTRE -->
+  <div style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--green);margin:1.5rem 0 0.7rem;">🎭 Théâtre – Musset</div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-theatre" style="margin:0;">Acte II, Scène 3</span><span style="font-size:0.8rem;color:var(--muted);margin-left:0.5rem;">Musset · 1834</span></div>
+    <div class="speech" style="font-size:0.85rem;">
+      <p>📌 <strong>Mouvement littéraire :</strong> Romantisme (XIXe s.). Mélange comédie/tragédie. "Proverbe dramatique".</p>
+      <p>📌 <strong>Problématique :</strong> Comment cette scène illustre-t-elle les "jeux du cœur et de la parole" à travers l'ambiguïté de Perdican ?</p>
+      <p>📌 <strong>Mouvement 1 :</strong> Rosette lucide → "Des mots sont des mots et des baisers sont des baisers", autodépréciation paradoxalement intelligente.</p>
+      <p>📌 <strong>Mouvement 2 :</strong> Perdican ambigu → compliment "mon enfant" (condescendance), embrasse après avoir dit "respecte", larmes = pluie par ciel pur.</p>
+      <p>📌 <strong>Procédé clé :</strong> Dialogue théâtral + antithèse mots/actes + image poétique des larmes.</p>
+      <p>📌 <strong>Phrase à citer :</strong> "Des mots sont des mots et des baisers sont des baisers."</p>
+      <p>📌 <strong>Ouverture :</strong> Marivaux <em>Le Jeu de l'amour et du hasard</em> / titre de la pièce = morale.</p>
+    </div>
+  </div>
+</div>
+
+<!-- RÉSUMÉS -->
+<div id="page-resumes" class="page">
+  <h2 class="section-title">📝 Résumés des textes</h2>
+  <p class="section-subtitle">De quoi ça parle concrètement ? Tout comprendre avant d'analyser.</p>
+
+  <div style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent2);margin:1rem 0 0.7rem;">📜 Poésie</div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-poesie" style="margin:0;">Vénus Anadyomène – Rimbaud</span></div>
+    <div class="speech" style="font-size:0.88rem;">
+      <p>Le titre <em>Anadyomène</em> vient du grec et signifie "qui sort de la mer". C'est une référence à la naissance mythologique de Vénus, la déesse de la beauté : dans la mythologie grecque et romaine, Vénus est née des flots de la mer et on la représente souvent sortant des vagues, magnifique. Le peintre Botticelli en a fait un tableau célèbre.</p>
+      <br>
+      <p>Dans ce sonnet, Rimbaud prend exactement cette image — une femme qui sort de l'eau — mais la retourne complètement. Au lieu de la mer, c'est une <strong>vieille baignoire bon marché</strong> (en zinc vert). Au lieu d'une déesse magnifique, c'est une femme dont Rimbaud décrit le corps de manière repoussante : cheveux gras et pommadés, cou gras et gris, dos court, graisse visible, colonne vertébrale rouge. Il utilise même le mot "échine", qui s'emploie normalement pour les animaux.</p>
+      <br>
+      <p>Le poème descend lentement du haut vers le bas du corps, comme un œil qui observe avec dégoût. À la fin, les reins portent l'inscription "Clara Venus" (Illustre Vénus en latin) — une ironie cruelle. Et le dernier vers est une gifle : <strong>"Belle hideusement d'un ulcère à l'anus"</strong>. Une plaie ouverte à l'endroit le plus vulgaire possible.</p>
+      <br>
+      <p>Le but de Rimbaud : <strong>détruire l'idéal de beauté</strong> que la poésie classique célèbre, montrer le réel dans sa laideur, et prouver qu'il n'a aucun respect pour les conventions. C'est un poème de révolte et de provocation, écrit par un gamin de seize ans.</p>
+    </div>
+  </div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-poesie" style="margin:0;">À la musique – Rimbaud</span></div>
+    <div class="speech" style="font-size:0.88rem;">
+      <p>Le poème se passe sur la <strong>place de la Gare à Charleville</strong>, la ville natale de Rimbaud qu'il déteste. Tous les jeudis soirs, un orchestre militaire joue en plein air sur la place. Tout le monde vient se montrer.</p>
+      <br>
+      <p>Rimbaud observe et décrit, un par un, les bourgeois qui défilent comme dans un zoo :</p>
+      <p>— Les "bourgeois poussifs" (qui ont du mal à respirer) qui portent leurs "bêtises jalouses" comme si c'était leur plus beau costume.<br>
+      — Le notaire qui se pavane avec ses bijoux portant ses initiales.<br>
+      — Des rentiers avec des lorgnons (lunettes) qui ne viennent pas écouter la musique mais pour souligner les fausses notes.<br>
+      — Des employés bouffis avec leurs "grosses dames".<br>
+      — Un gros bourgeois à la bedaine flamande qui fume tranquillement sa pipe en toute satisfaction.</p>
+      <br>
+      <p>Tout ce beau monde est décrit avec des mots péjoratifs, vulgaires, moqueurs. Rimbaud les méprise.</p>
+      <br>
+      <p>Puis, à la fin, <strong>Rimbaud parle de lui</strong> : "Moi, je suis, débraillé comme un étudiant". Il marche sous les marronniers en suivant de jeunes filles qui lui lancent des regards complices, chargés de "choses indiscrètes". C'est l'image de la liberté, de la jeunesse vivante, contre le monde figé et mort des bourgeois.</p>
+    </div>
+  </div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-parcours" style="margin:0;">Un Rêve – Aloysius Bertrand</span></div>
+    <div class="speech" style="font-size:0.88rem;">
+      <p>Ce court texte décrit un <strong>rêve</strong>, raconté après coup. La phrase d'en-tête ("J'ai rêvé tant et plus, mais je n'y entends note") signifie : j'ai rêvé plein de choses mais je n'y comprends rien.</p>
+      <br>
+      <p>Le rêve se déroule en trois tableaux, chacun introduit par une formule répétée :</p>
+      <p><strong>Premier tableau (ce que j'ai vu) :</strong> Une abbaye aux murs fissurés éclairés par la lune, une forêt avec des chemins tortueux, et le Morimont — une vraie place à Dijon où l'on exécutait les condamnés — remplie de gens en cape et chapeau.</p>
+      <p><strong>Deuxième tableau (ce que j'ai entendu) :</strong> Le glas d'une cloche (sonnerie pour les morts), des sanglots venant d'une cellule, des cris et des rires mêlés, et le murmure des moines pénitents qui accompagnent quelqu'un au supplice.</p>
+      <p><strong>Troisième tableau (la fin du rêve) :</strong> Un moine en train de mourir dans la cendre, une jeune fille pendue à un arbre qui se débat, et <strong>le narrateur lui-même</strong> attaché à une roue par le bourreau.</p>
+      <br>
+      <p>Ensuite, tout s'effondre : la barre du bourreau se casse, les torches s'éteignent sous la pluie, la foule se disperse. Le narrateur est libre. Il "poursuit d'autres songes vers le réveil" — il glisse vers un autre rêve, puis se réveille.</p>
+      <br>
+      <p>C'est un texte très court, très visuel, très sombre. Bertrand peint avec des mots comme Rembrandt peignait avec la lumière et l'ombre.</p>
+    </div>
+  </div>
+
+  <div style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--blue);margin:1.5rem 0 0.7rem;">💡 Littérature d'idées</div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-idees" style="margin:0;">Pauvres et misérables peuples – La Boétie</span></div>
+    <div class="speech" style="font-size:0.88rem;">
+      <p>La Boétie s'adresse directement aux peuples opprimés avec une question : <strong>pourquoi vous laissez-vous faire ?</strong></p>
+      <br>
+      <p>Il commence par les insulter presque : "Pauvres gens et misérables, peuples insensés, nations opiniâtres en votre mal !" — il est en colère contre eux, pas contre le tyran. Pourquoi ? Parce que selon lui, <strong>c'est leur faute</strong>.</p>
+      <br>
+      <p>Il décrit tout ce que le tyran leur prend : leurs revenus, leurs champs, leurs maisons, leurs meubles. Il fait la guerre avec leurs corps, il rassasie ses plaisirs avec leurs filles, il envoie leurs enfants à la mort.</p>
+      <br>
+      <p>Mais voilà le cœur de sa démonstration : ce tyran <strong>n'a que deux yeux, deux mains, un corps</strong> — comme n'importe quel homme. Il n'a aucun pouvoir propre. Tous ses yeux pour espionner ? Ce sont les vôtres. Ses mains pour frapper ? Les vôtres. Ses pieds pour fouler vos villes ? Les vôtres. Sans vous, il n'est rien.</p>
+      <br>
+      <p>Alors La Boétie arrive à sa conclusion, simple et explosive : <strong>vous n'avez pas besoin de vous révolter, pas besoin de le tuer. Arrêtez juste de le soutenir.</strong> "Soyez décidés à ne plus servir et vous serez libres." Il s'effondrera tout seul, comme un colosse dont on aurait retiré la base.</p>
+    </div>
+  </div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-idees" style="margin:0;">Deux Spartiates – La Boétie</span></div>
+    <div class="speech" style="font-size:0.88rem;">
+      <p>La Boétie raconte deux histoires pour illustrer son idée que la liberté, ça s'apprend — et que ceux qui ne l'ont jamais connue ne peuvent pas la défendre.</p>
+      <br>
+      <p><strong>Histoire 1 — Les Spartiates et le Persan Indarne :</strong><br>
+      Deux Spartiates (Sperte et Bulis) voyagent vers la Perse pour une mission diplomatique. En chemin, ils s'arrêtent chez Indarne, un puissant fonctionnaire du roi perse. Indarne leur dit : "Regardez comme je vis bien en servant le roi ! Vous pourriez avoir la même chose si vous le rejoigniez." Les Spartiates répondent : "Tu parles de la faveur du roi, très bien. Mais la liberté, son goût, sa douceur — tu ne sais pas ce que c'est. Si tu l'avais goûtée, tu nous conseillerais de la défendre même avec les dents et les ongles." La Boétie commente : chacun parle selon ce qu'il a vécu. Le Persan n'a jamais connu la liberté, donc il ne la regrette pas. Le Spartiate l'a connue, donc il refuse toute sujétion.</p>
+      <br>
+      <p><strong>Histoire 2 — Le jeune Caton chez Sylla :</strong><br>
+      Caton est encore enfant. Il visite souvent Sylla, le dictateur romain, parce qu'ils sont parents. Un jour, il observe que chez Sylla, on emprisonne des gens, on en condamne d'autres, on confisque des biens, on étrangle. Ce n'est pas un tribunal, c'est une "fabrique de tyrannie". Caton demande à son précepteur : "Donnez-moi un poignard. J'entre souvent dans la chambre de Sylla avant qu'il soit levé. J'ai le bras assez fort pour débarrasser la ville de lui." La Boétie dit : cette réaction montre que Caton est né à Rome quand elle était encore libre — la liberté est dans son sang.</p>
+      <br>
+      <p><strong>Conclusion de La Boétie :</strong> Il ne dit pas que la liberté dépend du pays ou du territoire. Il dit qu'on doit avoir pitié de ceux qui sont nés avec le joug au cou — ils ne savent pas qu'ils sont esclaves.</p>
+    </div>
+  </div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-parcours" style="margin:0;">Le Loup et le Chien – La Fontaine</span></div>
+    <div class="speech" style="font-size:0.88rem;">
+      <p>Un loup maigre à faire peur, "que les os et la peau", rencontre un chien énorme, gras, au poil brillant. Le loup aimerait bien le dévorer, mais le chien est trop costaud pour qu'il se risque à l'attaquer.</p>
+      <br>
+      <p>Alors le Loup l'aborde humblement et lui fait des compliments sur son embonpoint. Le Chien répond : "Il ne tient qu'à vous d'être aussi gras que moi. Quittez les bois ! Vos pareils y crèvent de faim. Suivez-moi : vous aurez un bien meilleur destin." Le Loup demande ce qu'il faudra faire. Le Chien répond : "Presque rien — chasser les mendiants, flatter les gens de la maison, obéir au maître. En échange : restes de poulets, os de pigeons, caresses."</p>
+      <br>
+      <p>Le Loup est tellement séduit qu'il en pleure de tendresse en imaginant cette belle vie.</p>
+      <br>
+      <p>Mais chemin faisant, il remarque que le cou du Chien est pelé. Il demande ce que c'est. Le Chien hésite, minimise : "Peu de chose. C'est le collier dont je suis attaché." Le Loup s'arrête net : <strong>"Attaché ? Vous ne courez donc pas où vous voulez ?"</strong> Le Chien admet que non, pas toujours. Et le Loup dit alors : "Je ne veux en aucune sorte de vos repas. Même un trésor ne vaudrait pas ce prix-là." Et il s'enfuit — et La Fontaine dit qu'il "court encor" — sous-entendu : il court toujours, libre.</p>
+    </div>
+  </div>
+
+  <div style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin:1.5rem 0 0.7rem;">📖 Roman</div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-roman" style="margin:0;">La Rencontre de Manon – Abbé Prévost</span></div>
+    <div class="speech" style="font-size:0.88rem;">
+      <p>Le narrateur, Des Grieux, raconte son passé à la première personne. Il était à Amiens, en voyage d'études, sage, timide, tout le monde admirait sa retenue. La veille de son départ pour rentrer chez son père, il se promène avec son ami Tiberge. Par curiosité, ils suivent une diligence jusqu'à l'hôtellerie où elle s'arrête.</p>
+      <br>
+      <p>Des femmes en descendent et partent aussitôt. Mais il en reste une — très jeune, seule dans la cour, pendant qu'un vieil homme récupère ses bagages. Des Grieux la voit. Et en un instant, tout change. Il dit qu'il "se trouva enflammé tout d'un coup jusqu'au transport" — c'est-à-dire comme foudroyé, presque malade tellement c'est violent.</p>
+      <br>
+      <p>Lui qui était si timide, si réservé — il s'avance vers elle. Elle reçoit ses politesses sans être embarrassée. Elle est "plus expérimentée" que lui, dit-il. Il lui demande d'où elle vient et ce qu'elle fait là. Elle répond naïvement qu'elle est envoyée par ses parents <strong>pour être religieuse</strong> — entrer au couvent. Pour Des Grieux, c'est un coup mortel : il vient de rencontrer cette fille et déjà l'idée de la perdre lui est insupportable.</p>
+      <br>
+      <p>Il essaie de la convaincre de ne pas y aller. Elle lui répond doucement qu'elle prévoit bien qu'elle va être malheureuse — mais qu'elle ne peut pas faire autrement. Le texte s'arrête là, mais on sait déjà que les deux vont s'enfuir ensemble. C'est le début d'une passion qui détruira leur vie.</p>
+    </div>
+  </div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-roman" style="margin:0;">La Mort de Manon – Abbé Prévost</span></div>
+    <div class="speech" style="font-size:0.88rem;">
+      <p>Des Grieux prévient le lecteur dès les premiers mots : il ne peut presque pas raconter ce qui s'est passé. "Pardonnez si j'achève en peu de mots un récit qui me tue." Ce souvenir lui est insupportable.</p>
+      <br>
+      <p>Ils sont en Louisiane, en Amérique, dans une plaine désertique, complètement seuls. Les deux amants ont passé la nuit tranquillement. Des Grieux croit Manon endormie et n'ose pas bouger pour ne pas la réveiller.</p>
+      <br>
+      <p>Au petit matin, il touche ses mains — elles sont <strong>froides et tremblantes</strong>. Il les approche de sa poitrine pour les réchauffer. Manon se réveille un peu, fait un effort pour serrer ses mains à lui, et lui dit faiblement qu'elle croit être à sa dernière heure. Des Grieux refuse d'y croire au début — il pense que c'est une façon de parler. Mais les soupirs, le silence, le serrement de mains lui font comprendre que c'est réel.</p>
+      <br>
+      <p>Puis Des Grieux s'arrête de raconter : "Je la perdis ; je reçus d'elle des marques d'amour au moment même qu'elle expirait." Il ne peut pas décrire plus. Elle meurt en l'aimant.</p>
+      <br>
+      <p>Il reste <strong>plus de vingt-quatre heures la bouche collée sur son visage et ses mains</strong>. Il voulait mourir là. Mais il réalise que s'il meurt, son corps à elle sera mangé par les bêtes sauvages. Alors il décide de l'enterrer lui-même, et d'attendre la mort assis sur sa tombe.</p>
+    </div>
+  </div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-parcours" style="margin:0;">Boule de Suif – Maupassant (scène du repas)</span></div>
+    <div class="speech" style="font-size:0.88rem;">
+      <p>Nous sommes en 1870, pendant la guerre franco-prussienne. Une diligence fuit Rouen occupée par les Prussiens. À bord : des bourgeois (commerçants, nobles, employés), deux religieuses, un républicain, et Élisabeth Rousset, surnommée "Boule de Suif" à cause de son embonpoint — une prostituée.</p>
+      <br>
+      <p>Le voyage dure longtemps. Tout le monde a faim. Mais personne n'a pensé à prendre de la nourriture — sauf Boule de Suif, qui sort un énorme panier rempli de provisions : deux poulets entiers en gelée, des pâtés, des fruits, des bouteilles.</p>
+      <br>
+      <p>Tous les regards se tournent vers elle. Les dames bourgeoises qui la méprisaient commencent à ressentir une haine encore plus féroce — mêlée d'envie. Elles voudraient presque la tuer ou la jeter par la fenêtre.</p>
+      <br>
+      <p>Mais Loiseau, le commerçant, craque en premier et accepte ce qu'elle lui propose. Puis les deux religieuses acceptent. Puis le républicain Cornudet. Puis Mme Loiseau, qui avait longtemps résisté. Et les autres aussi — sauf le comte et la comtesse de Bréville et les Carré-Lamadon, qui tiennent bon par orgueil et souffrent comme Tantale (personnage mythologique condamné à mourir de soif devant de l'eau).</p>
+      <br>
+      <p>Boule de Suif partage généreusement avec tout le monde. Elle est la plus humaine, la plus prévoyante — mais dans la suite de la nouvelle, ces mêmes gens qui ont accepté sa nourriture la trahiront et l'abandonneront. Maupassant dénonce ici l'hypocrisie de la bourgeoisie.</p>
+    </div>
+  </div>
+
+  <div style="font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--green);margin:1.5rem 0 0.7rem;">🎭 Théâtre</div>
+
+  <div class="oral-block" style="margin-bottom:0.8rem;">
+    <div class="oral-block-title"><span class="card-tag tag-theatre" style="margin:0;">On ne badine pas avec l'amour – Acte II, Scène 3 – Musset</span></div>
+    <div class="speech" style="font-size:0.88rem;">
+      <p>Pour comprendre cette scène, voici le contexte de la pièce : Perdican est le fils du baron, il revient au château après des années d'études à Paris. Sa cousine Camille est revenue du couvent. On pensait les marier. Mais Camille le repousse froidement — elle a décidé de ne pas se marier et de retourner au couvent. Perdican, blessé dans son orgueil et son amour, décide de se rapprocher de Rosette, une paysanne qui était la sœur de lait de Camille. Il sait très bien que Camille les observe parfois.</p>
+      <br>
+      <p>Dans cette scène, Perdican et Rosette se promènent ensemble devant la maison. Rosette lui pose directement une question : est-ce que tous ces baisers lui font du bien ? Elle n'est pas stupide — elle sait bien que quelque chose ne va pas. Perdican dit que c'est comme un frère qui embrasse sa sœur. Rosette répond avec une sagesse simple et frappante : <strong>"Des mots sont des mots et des baisers sont des baisers"</strong> — autrement dit, les mots ne changent pas la réalité des actes.</p>
+      <br>
+      <p>Elle lui demande si son mariage avec Camille est "manqué". Perdican ne répond pas vraiment. Il lui dit qu'elle est jolie. Elle le remercie, sans se laisser distraire. Il lui dit qu'il parlera de tout ce qu'elle voudra, "de tout ce qui peut passer sur tes lèvres sans leur ôter ce sourire céleste" — et aussitôt après, il l'embrasse. Rosette lui fait remarquer la contradiction : il dit respecter son sourire mais ne respecte pas ses lèvres.</p>
+      <br>
+      <p>La scène se termine par une image poétique : Rosette voit une goutte de pluie tomber sur sa main alors que le ciel est pur. Elle demande à Perdican pourquoi il pleure. Il lui dit "pardonne-moi" et ils sortent. <strong>Ce sont les larmes de Perdican</strong> — il est sincèrement touché, mais il utilise quand même Rosette. À la fin de la pièce, Rosette mourra de cette manipulation.</p>
+    </div>
+  </div>
+</div>
+
+<button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// TEXT DATA
+const texts = {
+  venus: {
+    tag: 'Poésie', tagClass: 'tag-poesie',
+    author: 'Arthur Rimbaud (1854-1891)',
+    title: 'Vénus Anadyomène',
+    oeuvre: 'Les Cahiers de Douai, 1870 · Parcours : Émancipations créatrices',
+    intro: `<strong>Auteur :</strong> Arthur Rimbaud (1854-1891) est un poète français génie précoce. Il compose ses premiers poèmes à seize ans dans les <em>Cahiers de Douai</em>, avant de renoncer à la littérature à vingt ans.<br><br><strong>Œuvre :</strong> <em>Vénus Anadyomène</em> est un sonnet extrait des <em>Cahiers de Douai</em> (1870). Le titre grec signifie 'qui sort de la mer' — il renvoie à la naissance de Vénus, déesse de la beauté, représentée sortant des flots comme dans le tableau de Botticelli.<br><br><strong>Contexte :</strong> En 1870, Rimbaud a seize ans et vit à Charleville. Il prend le contre-pied du mythe de Vénus pour en faire une parodie grotesque : sortie d'une baignoire au lieu de la mer, corps repoussant au lieu de la beauté idéale.<br><br><span class="mvt-badge" style="background:rgba(236,72,153,0.15);border-color:var(--accent3);color:var(--accent3);">Mouvement littéraire</span> Rimbaud rompt avec le <strong>Parnasse</strong> et l'idéalisme romantique. Il annonce le <strong>symbolisme</strong> en imposant une poésie du réel, voire du laid, préfigurant sa future 'Lettre du Voyant'.<br><br><strong>Problématique :</strong> Comment Rimbaud détourne-t-il le mythe de Vénus pour refuser les idéaux esthétiques conventionnels et affirmer sa liberté créatrice ?<br><br><strong>Annonce des axes :</strong> Nous étudierons dans un premier temps <span class="mvt-badge">Mouvement 1</span> la description progressive et dégradante du corps (v. 1-8), puis dans un second temps <span class="mvt-badge">Mouvement 2</span> le choc de la chute finale qui parachève la parodie (v. 9-14).`,
+    mvt1: {
+      titre: 'Mouvement 1 (v. 1-8) – Une émergence grotesque',
+      contenu: `Rimbaud commence par une comparaison qui choque immédiatement : "Comme d'un cercueil vert en fer blanc, une tête / De femme". Le mot <strong>"cercueil"</strong> place d'emblée la scène sous le signe de la mort, à l'opposé de la naissance glorieuse de Vénus. La comparaison est dégradante et antipoétique : la baignoire, objet trivial et ménager, remplace la mer mythologique.<br><br>
+      L'adjectif <strong>"lente et bête"</strong> animalise le personnage et lui retire toute grâce. Rimbaud accumule ensuite les parties du corps de manière clinique et repoussante : "le col gras et gris", "les larges omoplates / Qui saillent", "le dos court". Cette <strong>enumération descendante</strong> transforme la femme en objet anatomique disséqué. Le mot <strong>"échine"</strong> (v. 9), habituellement réservé aux animaux, renforce encore cette déshumanisation.<br><br>
+      On note aussi les <strong>allitérations en [r]</strong> dans "remue", "rondeurs", "reins", "ressort" qui créent un effet sonore de rugosité et d'inconfort.`
+    },
+    mvt2: {
+      titre: 'Mouvement 2 (v. 9-14) – La chute cruelle : "Clara Venus"',
+      contenu: `Le vers 9 introduit une rupture : "L'échine est un peu rouge, et le tout sent un goût / Horrible étrangement". Le mot <strong>"horrible"</strong> rompt définitivement avec tout idéal poétique. Rimbaud ironise avec "on remarque surtout / Des singularités qu'il faut voir à la loupe" — formule presque scientifique, parodiant le regard du naturaliste.<br><br>
+      La chute du sonnet est un véritable coup de poing : <strong>"Clara Venus"</strong> (l'illustre Vénus) est gravé sur les reins de cette femme, ce qui représente une ironie cruelle. L'inscription latine est empruntée à la culture classique, mais appliquée à un corps vulgaire — c'est la dégradation du mythe par excellence.<br><br>
+      Le dernier vers — <strong>"Belle hideusement d'un ulcère à l'anus"</strong> — est un oxymore explosif. L'adverbe "hideusement" contredit "Belle", et le mot "ulcère" (plaie ouverte) associé à "anus" constitue la provocation finale. Rimbaud met fin brutalement à toute tentation de beauté idéalisée.<br><br>
+      C'est l'émancipation totale : Rimbaud libère la poésie des sujets nobles et du corps idéalisé.`
+    },
+    conclusion: `En conclusion, <em>Vénus Anadyomène</em> est un sonnet de rupture radicale. Rimbaud parodie le mythe de Vénus avec une description clinique et repoussante, couronnée de l'oxymore 'Belle hideusement' et de l'ironie de 'Clara Venus'. Il affirme ainsi une liberté créatrice totale, refusant les idéaux esthétiques imposés.<br><br><strong>Ouverture :</strong> Ce poème illustre parfaitement le parcours 'Émancipations créatrices' : s'émanciper, c'est refuser les idéaux imposés. On peut aussi le relier au parcours 'Défendre et entretenir la liberté' : Rimbaud défend ici sa liberté de créateur contre les normes esthétiques, comme La Boétie défend la liberté politique contre l'obéissance aveugle.`
+  },
+
+  musique: {
+    tag: 'Poésie', tagClass: 'tag-poesie',
+    author: 'Arthur Rimbaud (1854-1891)',
+    title: 'À la musique',
+    oeuvre: 'Les Cahiers de Douai, 1870 · Parcours : Émancipations créatrices',
+    intro: `<strong>Auteur :</strong> Arthur Rimbaud (1854-1891), poète français génie précoce, compose <em>À la musique</em> à seize ans. Son œuvre brève révolutionne la poésie française.<br><br><strong>Œuvre :</strong> <em>À la musique</em> est extrait des <em>Cahiers de Douai</em> (1870). Il porte le sous-titre 'Place de la Gare, à Charleville', ancrant le poème dans le quotidien de sa ville natale qu'il méprise.<br><br><strong>Contexte :</strong> Le poème décrit un concert en plein air un jeudi soir. Rimbaud n'évoque pas la musique mais observe avec ironie la bourgeoisie qui se pavane, avant de s'inclure lui-même dans le tableau, débraillé et libre.<br><br><span class="mvt-badge" style="background:rgba(236,72,153,0.15);border-color:var(--accent3);color:var(--accent3);">Mouvement littéraire</span> Rimbaud s'inscrit dans un <strong>réalisme poétique satirique</strong>, proche de Baudelaire dans ses <em>Tableaux parisiens</em>. Il rejette le Parnasse et le romantisme larmoyant pour une poésie d'observation sociale acide.<br><br><strong>Problématique :</strong> Comment Rimbaud affirme-t-il sa liberté de poète à travers la satire de la bourgeoisie provinciale et son refus du conformisme ?<br><br><strong>Annonce des axes :</strong> Nous étudierons <span class="mvt-badge">Mouvement 1</span> le portrait collectif et satirique de la bourgeoisie (str. 1-5), puis <span class="mvt-badge">Mouvement 2</span> l'irruption du moi du poète et sa relation complice aux jeunes filles (str. 6-7).`,
+    mvt1: {
+      titre: 'Mouvement 1 (str. 1-5) – La galerie des bourgeois ridicules',
+      contenu: `Dès la première strophe, le ton est donné : la place est "taillée en mesquines pelouses", le mot <strong>"mesquines"</strong> soulignant l'étroitesse d'esprit autant que la petitesse des lieux. Tout est "correct" — ce mot neutre ironique signale un monde réglé, normé, sans vie.<br><br>
+      Rimbaud dresse ensuite une galerie de portraits caricaturaux :<br>
+      - <strong>Les bourgeois "poussifs"</strong> (qui ont du mal à respirer) et "bêtises jalouses" — la jalousie sociale remplace tout sentiment authentique.<br>
+      - <strong>Le notaire</strong> qui "pend à ses breloques à chiffres" — image d'un homme réduit à sa richesse, ses bijoux chiffrés symbolisant l'obsession de l'argent.<br>
+      - <strong>Les rentiers à lorgnons</strong> qui "soulignent tous les couacs" — ils viennent non pour apprécier la musique, mais pour critiquer.<br>
+      - <strong>Le bourgeois à bedaine flamande</strong> qui "savoure son onnaing" (pipe de contrebande) — image de satisfaction bovine et vulgaire.<br><br>
+      Le lexique est systématiquement péjoratif : "bouffis", "grosses dames", "traînant". Rimbaud utilise un <strong>registre satirique</strong> implacable.`
+    },
+    mvt2: {
+      titre: "Mouvement 2 (str. 6-7) – L'irruption du poète libertin",
+      contenu: `La rupture arrive au vers 25 avec le pronom <strong>"Moi"</strong> mis en valeur en début de vers : "– Moi, je suis, débraillé comme un étudiant". Ce tiret marque une séparation nette entre le poète et la foule bourgeoise qu'il vient de décrire.<br><br>
+      <strong>"Débraillé"</strong> est significatif : son apparence négligée est une transgression délibérée du code vestimentaire bourgeois, une affirmation de liberté. Rimbaud se peint en marginal, en voyeur libre qui "suit" les "alertes fillettes" sous les marronniers.<br><br>
+      La chute est provocatrice : les jeunes filles lui tournent "leurs yeux tout pleins de choses indiscrètes" — regard complice et chargé d'érotisme retenu. C'est l'inverse des regards froids et calculateurs des bourgeois : ici, il y a vie, désir, liberté.<br><br>
+      Le poème se termine sur cette image suspendue, en rupture avec l'ordre bourgeois du début.`
+    },
+    conclusion: `En conclusion, <em>À la musique</em> est un poème d'émancipation par la satire. À travers un regard acide sur la bourgeoisie de Charleville, Rimbaud affirme sa liberté d'artiste indépendant et marginal. En s'incluant dans le tableau final, il brise le regard surplombant du satiriste pour devenir acteur du poème.<br><br><strong>Ouverture :</strong> Ce poème illustre l'émancipation créatrice comme refus du conformisme. On peut le relier au parcours 'Défendre et entretenir la liberté' : la liberté artistique de Rimbaud passe par le même refus de servitude que celui prôné par La Boétie — refuser de se plier aux codes, c'est déjà un acte de résistance.`
+  },
+
+  reve: {
+    tag: 'Parcours Poésie', tagClass: 'tag-parcours',
+    author: 'Aloysius Bertrand (1807-1841)',
+    title: 'Un Rêve',
+    oeuvre: 'Gaspard de la Nuit (posth. 1842) · Parcours : Émancipations créatrices',
+    intro: `<strong>Auteur :</strong> Aloysius Bertrand (1807-1841) est un poète romantique français mort jeune dans la misère. Il est l'inventeur du poème en prose, forme entièrement nouvelle qui libère la poésie du vers.<br><br><strong>Œuvre :</strong> <em>Un Rêve</em> est extrait de <em>Gaspard de la Nuit</em>, publié à titre posthume en 1842. Le sous-titre 'Fantaisies à la manière de Callot et de Rembrandt' revendique une inspiration picturale sombre et baroque. C'est le premier recueil de poèmes en prose de la littérature française.<br><br><strong>Contexte :</strong> Le texte décrit un rêve en trois temps : décor nocturne et lugubre, sons mortifères, puis le narrateur lui-même lié au gibet. Tout s'effondre et il s'éveille vers d'autres songes.<br><br><span class="mvt-badge" style="background:rgba(236,72,153,0.15);border-color:var(--accent3);color:var(--accent3);">Mouvement littéraire</span> Bertrand s'inscrit dans le <strong>romantisme fantastique</strong>, qui valorise le rêve, la nuit et le mystère. Il est précurseur : son œuvre influencera directement Baudelaire (<em>Spleen de Paris</em>) et Rimbaud (<em>Illuminations</em>).<br><br><strong>Problématique :</strong> Comment Bertrand, à travers la forme novatrice du poème en prose et un univers onirique fantastique, libère-t-il la poésie de ses contraintes traditionnelles ?<br><br><strong>Annonce des axes :</strong> Nous étudierons <span class="mvt-badge">Mouvement 1</span> la mise en place d'une atmosphère nocturne et morbide (§1-2), puis <span class="mvt-badge">Mouvement 2</span> la résolution onirique et la fuite vers le réveil (§3-4).`,
+    mvt1: {
+      titre: 'Mouvement 1 (§1-2) – Un décor nocturne et mortifère',
+      contenu: `Le texte s'ouvre sur trois mots : <strong>"Il était nuit."</strong> Cette phrase brève, presque oraculaire, pose immédiatement l'univers du rêve. La nuit est le temps de l'inconscient, de l'imagination sans contrôle.<br><br>
+      Bertrand utilise une structure répétitive et incantoire : <strong>"ainsi j'ai vu, ainsi je raconte"</strong> et <strong>"ainsi j'ai entendu, ainsi je raconte"</strong>. Cette anaphore crée un effet de récitation, comme un conteur ou un veilleur de nuit. Elle donne une dimension rituelle au récit.<br><br>
+      Les éléments du décor sont caractéristiques du registre <strong>fantastique et gothique</strong> : "abbaye aux murailles lézardées", "sentiers tortueux", "glas funèbre", "pénitents noirs". L'accumulation de ces images crée une atmosphère d'angoisse et de mort.<br><br>
+      Le "Morimont" — place d'exécution de Dijon — ancre le rêve dans un lieu réel, ce qui renforce le malaise. Les "capes et chapeaux" qui y grouillent suggèrent une foule macabre et anonyme.`
+    },
+    mvt2: {
+      titre: 'Mouvement 2 (§3-4) – Mort, destin et fuite onirique',
+      contenu: `Le troisième paragraphe présente trois destins parallèles : "un moine qui expirait", "une jeune fille qui se débattait pendue", "et moi que le bourreau liait". Cette construction tripartite place le narrateur en victime, au même niveau que les autres personnages du rêve.<br><br>
+      Mais le quatrième paragraphe introduit une rupture salvatrice : "la barre du bourreau s'était brisée comme un verre", "les torches s'étaient éteintes", "la foule s'était écoulée". Ces actions au passé composé signalent l'effondrement du cauchemar. Le narrateur est libéré non par sa volonté, mais par la logique imprévisible du rêve.<br><br>
+      La dernière image — <strong>"je poursuivais d'autres songes vers le réveil"</strong> — est très poétique : le rêve ne s'arrête pas, il se transforme. Cette ouverture finale symbolise la liberté infinie de l'imagination créatrice.<br><br>
+      Sur la forme : le <strong>poème en prose</strong> lui-même est une émancipation. Bertrand refuse la contrainte du vers pour créer un texte qui a le rythme et la musique de la poésie mais la liberté de la prose.`
+    },
+    conclusion: `En conclusion, <em>Un Rêve</em> de Bertrand est un texte fondateur. Il invente le poème en prose, libérant la poésie du vers et de la rime. À travers un univers nocturne et fantastique, il crée une œuvre qui préfigure Baudelaire et Rimbaud. La forme elle-même est un acte d'émancipation créatrice.<br><br><strong>Ouverture :</strong> On peut relier ce texte au parcours 'Émancipations créatrices' : briser la forme du vers est une forme de liberté littéraire comparable au refus de servir chez La Boétie. Rimbaud, dans les <em>Cahiers de Douai</em>, hérite de Bertrand pour construire sa propre émancipation poétique.`
+  },
+
+  boetie1: {
+    tag: 'Littérature d\'Idées', tagClass: 'tag-idees',
+    author: 'Étienne de La Boétie (1530-1563)',
+    title: 'Pauvres et misérables peuples insensés',
+    oeuvre: 'Discours de la servitude volontaire, 1576 · Parcours : Défendre et entretenir la liberté',
+    intro: `<strong>Auteur :</strong> Étienne de La Boétie (1530-1563) est un humaniste français, ami de Montaigne. Il rédige le <em>Discours de la servitude volontaire</em> vers 1549, à dix-huit ans seulement, publié en 1576 après sa mort.<br><br><strong>Œuvre :</strong> Le <em>Discours de la servitude volontaire</em> est un essai politique fondateur. La Boétie y pose la question : pourquoi les peuples acceptent-ils d'obéir à un seul homme qui les opprime ? Sa réponse : la tyrannie repose entièrement sur le consentement des peuples.<br><br><strong>Contexte :</strong> Dans cet extrait, La Boétie interpelle directement les peuples avec une apostrophe virulente. Il leur montre leur complicité dans leur propre oppression et les appelle à simplement refuser de servir.<br><br><span class="mvt-badge" style="background:rgba(236,72,153,0.15);border-color:var(--accent3);color:var(--accent3);">Mouvement littéraire</span> Ce texte s'inscrit dans l'<strong>humanisme de la Renaissance</strong> (XVIe siècle), mouvement qui place la raison et la dignité humaine au cœur de la réflexion. La Boétie s'inspire des philosophes stoïciens antiques (Cicéron, Sénèque).<br><br><strong>Problématique :</strong> Comment La Boétie, par une rhétorique percutante et progressive, amène-t-il les peuples à prendre conscience de leur complicité dans leur oppression et à choisir la liberté ?<br><br><strong>Annonce des axes :</strong> Nous étudierons <span class="mvt-badge">Mouvement 1</span> l'apostrophe virulente et le tableau de la spoliation (l. 1-8), puis <span class="mvt-badge">Mouvement 2</span> la démonstration par les questions rhétoriques (l. 9-20), et enfin <span class="mvt-badge">Mouvement 3</span> l'appel à la liberté par le simple refus (l. 21-26).`,
+    mvt1: {
+      titre: 'Mouvement 1 (l. 1-8) – L\'apostrophe virulente',
+      contenu: `La Boétie ouvre par une <strong>apostrophe</strong> (interpellation directe) violente : <strong>"Pauvres gens et misérables, peuples insensés, nations opiniâtres en votre mal !"</strong>. L'accumulation d'adjectifs dégradants ("misérables", "insensés", "opiniâtres") vise à choquer, à réveiller les esprits endormis. Ce n'est pas de la pitié : c'est de la colère.<br><br>
+      L'auteur dresse ensuite un tableau de la spoliation : "vous laissez emporter le plus beau et le plus clair de votre revenu, piller vos champs, voler vos maisons". L'<strong>énumération des biens volés</strong> rend concrète et tangible l'oppression. La répétition de "vos" (vos champs, vos maisons, vos biens) rappelle que tout ce qui leur appartient leur est pris.<br><br>
+      Le paradoxe est frappant : la ruine vient non "des ennemis" mais <strong>"de l'ennemi"</strong> — un seul homme, le tyran, que les peuples eux-mêmes ont fait grand.`
+    },
+    mvt2: {
+      titre: 'Mouvement 2 (l. 9-20) – Les questions rhétoriques : la complicité du peuple',
+      contenu: `La Boétie enchaîne une série de <strong>questions rhétoriques</strong> percutantes : "D'où a-t-il pris tant d'yeux ? Comment a-t-il tant de mains ? Les pieds dont il foule vos cités ne sont-ils pas aussi les vôtres ?" Ces questions n'appellent pas de réponse : elles démontrent que le tyran n'existe que par le peuple.<br><br>
+      La métaphore du corps est centrale : le tyran "n'a que deux yeux", "deux mains", "un corps". Il est un homme ordinaire. Son pouvoir lui vient entièrement du peuple qui le sert et l'alimente. C'est l'idée centrale du <em>Discours</em>.<br><br>
+      La Boétie va jusqu'à accuser les peuples d'être <strong>"receleurs du voleur", "complices du meurtrier", "traîtres à vous-mêmes"</strong> — vocabulaire judiciaire qui fait des opprimés les véritables responsables de leur oppression.`
+    },
+    mvt3: {
+      titre: 'Mouvement 3 (l. 21-26) – L\'appel à la liberté : la solution est simple',
+      contenu: `La chute du texte est sa partie la plus célèbre et la plus forte. La Boétie affirme que la solution est étonnamment simple : "vous pouvez vous délivrer si vous faites l'essai, non pas de vous en délivrer, mais seulement de vouloir le faire."<br><br>
+      <strong>"Soyez décidés à ne plus servir et vous serez libres."</strong> Cette phrase est le cœur du texte. La liberté n'est pas une conquête armée : c'est un choix. Il suffit de refuser.<br><br>
+      La métaphore finale est mémorable : le tyran est comparé à <strong>"un grand colosse à qui l'on a dérobé la base"</strong> — sans le soutien du peuple, il s'effondre de lui-même. Image de fragilité du pouvoir quand il perd sa base populaire.`
+    },
+    conclusion: `La liberté est à portée de main : il suffit de décider de ne plus obéir. Ce texte reste d'une modernité troublante.<br><br><strong>Ouverture :</strong> Ce texte est au cœur du parcours 'Défendre et entretenir la liberté' : La Boétie nous dit que la liberté ne se conquiert pas par les armes mais par le simple refus de servir. On peut le relier à la fable <em>Le Loup et le Chien</em> de La Fontaine (même parcours) — le Loup incarne ce refus — et à <em>Antigone</em> d'Anouilh (lecture cursive) : Antigone dit non à Créon exactement comme La Boétie l'invite à faire.`
+  },
+
+  boetie2: {
+    tag: 'Littérature d\'Idées', tagClass: 'tag-idees',
+    author: 'Étienne de La Boétie (1530-1563)',
+    title: 'Deux Spartiates – Sperte et Bulis',
+    oeuvre: 'Discours de la servitude volontaire, 1576 · Parcours : Défendre et entretenir la liberté',
+    intro: `<strong>Auteur :</strong> Étienne de La Boétie (1530-1563), humaniste français, ami de Montaigne. Son <em>Discours de la servitude volontaire</em> rédigé vers 1549 est un texte fondateur de la pensée politique moderne.<br><br><strong>Œuvre :</strong> Dans ce passage, La Boétie illustre sa thèse par deux anecdotes historiques : la rencontre des Spartiates Sperte et Bulis avec le Persan Indarne, et l'histoire du jeune Caton face à Sylla le dictateur.<br><br><strong>Contexte :</strong> La Boétie vient d'expliquer que la liberté est un goût qui se forme. Il prouve ici par des exemples concrets que ceux qui ont connu la liberté ne peuvent pas accepter la servitude.<br><br><span class="mvt-badge" style="background:rgba(236,72,153,0.15);border-color:var(--accent3);color:var(--accent3);">Mouvement littéraire</span> Même mouvement que le premier texte : <strong>humanisme de la Renaissance</strong>. La Boétie mobilise la technique des <em>exempla</em> (exemples historiques), héritée des auteurs antiques (Cicéron, Plutarque).<br><br><strong>Problématique :</strong> Comment La Boétie utilise-t-il deux anecdotes historiques pour démontrer que le goût de la liberté se construit par l'éducation et l'expérience ?<br><br><strong>Annonce des axes :</strong> Nous étudierons <span class="mvt-badge">Mouvement 1</span> la dispute entre le Persan et les Spartiates sur le goût de la liberté (l. 1-16), puis <span class="mvt-badge">Mouvement 2</span> l'anecdote du jeune Caton chez Sylla (l. 17-28), et enfin <span class="mvt-badge">Mouvement 3</span> la leçon philosophique de La Boétie (l. 29-34).`,
+    mvt1: {
+      titre: 'Mouvement 1 (l. 1-16) – Indarne, les Spartiates et la saveur de la liberté',
+      contenu: `La Boétie met en scène deux Spartiates (Sperte et Bulis) qui se rendent chez Indarne, haut fonctionnaire perse. Ce dernier leur propose la richesse et les honneurs en échange de leur soumission au roi de Perse.<br><br>
+      La réponse spartiate est saisissante : "Tu as éprouvé la faveur du roi ; mais <strong>de la liberté, de son goût, de sa douceur, tu ne sais rien</strong>. Or, si tu en avais tâté, toi-même tu nous conseillerais de la défendre, non pas avec la lance et l'écu, mais avec les dents et les ongles."<br><br>
+      La métaphore sensorielle du <strong>goût</strong> est fondamentale : la liberté n'est pas un concept abstrait, c'est quelque chose qu'on ressent, qu'on goûte. Indarne ne peut pas comprendre ce à quoi il n'a jamais goûté. La gradation "avec les dents et les ongles" montre que cette défense est viscérale, animale, instinctive.<br><br>
+      La Boétie commente : chacun parle "selon qui les avait nourris" — on défend ce qu'on a appris à aimer. C'est une idée centrale : la servitude et la liberté sont des habitudes.`
+    },
+    mvt2: {
+      titre: 'Mouvement 2 (l. 17-28) – Le jeune Caton : la liberté dans le sang',
+      contenu: `La deuxième anecdote met en scène <strong>Caton enfant</strong>, encore sous l'autorité de son précepteur, qui visite Sylla le dictateur. Il observe que Sylla fait emprisonner, condamner, exiler des gens arbitrairement.<br><br>
+      La réaction du gamin est stupéfiante : il demande un poignard pour "en débarrasser la ville". La Boétie n'y voit pas un geste d'un enfant fou, mais le signe d'une âme née pour la liberté : <strong>"Voilà certes une parole vraiment propre à Caton : les débuts de ce personnage étaient dignes de ce que serait sa mort."</strong> (Caton se suicidera plutôt que de vivre sous la dictature de César.)<br><br>
+      L'anecdote illustre que Caton, ayant grandi dans une Rome libre, ressent intuitivement l'injustice du pouvoir tyrannique — contrairement à quelqu'un né sous la tyrannie.`
+    },
+    mvt3: {
+      titre: 'Mouvement 3 (l. 29-34) – La leçon philosophique : pitié pour ceux qui n\'ont jamais connu la liberté',
+      contenu: `La Boétie tire la leçon générale : "en toutes contrées, en tout air, amère est la sujétion et plaisante est la liberté." La liberté est universellement désirable — mais encore faut-il l'avoir connue pour la défendre.<br><br>
+      Il appelle à la <strong>pitié</strong> pour ceux qui n'ont jamais connu la liberté : ils ne peuvent pas savoir ce qu'ils perdent. Cette nuance humaniste est importante : La Boétie ne méprise pas les esclaves de naissance — il les plaint.<br><br>
+      L'image du "joug au col" (le joug est l'instrument qu'on met sur le cou des bœufs) est une métaphore animale qui rabaisse la condition des peuples sous la tyrannie au niveau du bétail.`
+    },
+    conclusion: `Ce texte incite à valoriser et à défendre la liberté comme un bien précieux et fragile.<br><br><strong>Ouverture :</strong> Cet extrait prolonge le parcours 'Défendre et entretenir la liberté' : La Boétie montre que la liberté s'entretient par l'éducation et l'expérience — on ne peut défendre ce qu'on n'a jamais connu. On peut relier la figure de Caton à celle d'Antigone chez Anouilh : deux jeunes gens qui refusent instinctivement l'injustice du pouvoir, au risque de leur vie.`
+  },
+
+  loup: {
+    tag: 'Parcours Idées', tagClass: 'tag-parcours',
+    author: 'Jean de La Fontaine (1621-1695)',
+    title: 'Le Loup et le Chien',
+    oeuvre: 'Fables, Livre I, Fable 5 · 1668 · Parcours : Défendre et entretenir la liberté',
+    intro: `<strong>Auteur :</strong> Jean de La Fontaine (1621-1695) est un poète classique français, célèbre pour ses <em>Fables</em>. Il s'inspire des fabulistes antiques Ésope et Phèdre, mais renouvelle profondément la forme par sa richesse stylistique.<br><br><strong>Œuvre :</strong> <em>Le Loup et le Chien</em> est la cinquième fable du Livre I des <em>Fables</em>, publiées en 1668. La Fontaine suit sa règle : plaire et instruire. La fable se conclut par la chute célèbre : 'maître Loup s'enfuit, et court encor.'<br><br><strong>Contexte :</strong> Un loup affamé rencontre un chien bien nourri. Le chien lui propose de rejoindre son maître pour manger à sa faim, mais lui révèle qu'il est attaché. Le Loup refuse et s'enfuit.<br><br><span class="mvt-badge" style="background:rgba(236,72,153,0.15);border-color:var(--accent3);color:var(--accent3);">Mouvement littéraire</span> La Fontaine s'inscrit dans le <strong>classicisme du XVIIe siècle</strong>, qui valorise la raison, l'ordre et la morale. Les <em>Fables</em> sont dédiées au jeune Dauphin et glissent des leçons politiques sous le voile du récit animalier.<br><br><strong>Problématique :</strong> Comment La Fontaine illustre-t-il, à travers l'opposition du Loup et du Chien, la supériorité de la liberté sur la sécurité et le confort matériel ?<br><br><strong>Annonce des axes :</strong> Nous étudierons <span class="mvt-badge">Mouvement 1</span> la rencontre et la tentation du confort (v. 1-20), puis <span class="mvt-badge">Mouvement 2</span> la révélation du collier et le refus catégorique de la servitude (v. 21-41).`,
+    mvt1: {
+      titre: 'Mouvement 1 (v. 1-20) – La tentation du confort',
+      contenu: `La fable s'ouvre sur un contraste brutal : le Loup est "que les os et la peau" tandis que le Chien est "gras, poli" (au poil luisant). Cette opposition visuelle immédiate pose les enjeux : misère contre abondance.<br><br>
+      Le Loup <strong>"l'aborde humblement"</strong> — le roi des forêts est ici réduit à l'humilité par la faim. Cette déchéance est significative : la liberté a un prix qui peut être très concret (la faim).<br><br>
+      La réponse du Chien est séduisante : "Il ne tiendra qu'à vous, beau sire / D'être aussi gras que moi". Il peint un tableau idyllique : "os de poulets, os de pigeons", "mainte caresse". La <strong>gradation des récompenses</strong> est efficacement rhétorique — le Chien sait vendre sa proposition.<br><br>
+      Le vers 30 est comique : "Le loup déjà se forge une félicité / Qui le fait pleurer de tendresse." La naïveté du Loup crée un effet comique touchant.`
+    },
+    mvt2: {
+      titre: 'Mouvement 2 (v. 21-41) – La révélation : le prix de la liberté',
+      contenu: `Le retournement arrive au vers 32 : "Chemin faisant il vit le col du Chien, pelé". Le <strong>col pelé</strong> est la trace physique du collier — la marque de la servitude inscrite dans la chair.<br><br>
+      Le dialogue qui s'ensuit est remarquable par son rythme : "Qu'est-ce là ? lui dit-il. Rien. Quoi ? rien ? Peu de chose. / Mais encor ? Le collier dont je suis attaché..." La fragmentation des répliques, les hésitations du Chien, montrent sa honte et sa gêne. La phrase <strong>"Attaché ? dit le Loup"</strong> sonne comme un choc.<br><br>
+      La réaction du Loup est tranchée et philosophique : "Il importe si bien, que de tous vos repas / Je ne veux en aucune sorte". La liberté est pour lui une valeur absolue, incomparable à n'importe quel confort matériel.<br><br>
+      La chute est célèbre : <strong>"Cela dit, maître Loup s'enfuit, et court encor."</strong> Le présent ("court encor") est symbolique : le Loup est encore en train de courir, libre, au moment même où nous lisons.`
+    },
+    conclusion: `Lien parfait avec La Boétie : servitude volontaire contre dignité libre.<br><br><strong>Ouverture :</strong> Cette fable illustre parfaitement le parcours 'Défendre et entretenir la liberté' : la liberté du Loup est inconfortable, mais elle est la seule digne. On peut la relier directement au <em>Discours de la servitude volontaire</em> de La Boétie — les deux textes défendent la même idée : la servitude acceptée pour le confort est une trahison de soi-même. Antigone d'Anouilh choisit elle aussi la mort libre plutôt que la vie soumise.`
+  },
+
+  manon1: {
+    tag: 'Roman', tagClass: 'tag-roman',
+    author: 'Abbé Prévost (1697-1763)',
+    title: 'La Rencontre de Manon et Des Grieux',
+    oeuvre: 'Manon Lescaut, 1731 · Parcours : Personnages en marge, plaisirs du romanesque',
+    intro: `<strong>Auteur :</strong> Antoine François Prévost, dit l'Abbé Prévost (1697-1763), est un romancier français du XVIIIe siècle. Ancien moine bénédictin, il mène une vie aventureuse qui nourrit son œuvre.<br><br><strong>Œuvre :</strong> <em>Manon Lescaut</em> (1731), sous-titré <em>Histoire du chevalier des Grieux et de Manon Lescaut</em>, est un roman-mémoires : Des Grieux raconte à la première personne sa passion dévastatrice pour Manon. C'est l'un des premiers grands romans d'amour de la littérature française.<br><br><strong>Contexte :</strong> Cet extrait est la scène de la rencontre fondatrice. Des Grieux, jeune homme sage et timide, est à Amiens la veille de son départ pour chez son père. Par hasard, il aperçoit Manon dans la cour d'une hôtellerie. En un instant, sa vie bascule.<br><br><span class="mvt-badge" style="background:rgba(236,72,153,0.15);border-color:var(--accent3);color:var(--accent3);">Mouvement littéraire</span> Ce roman s'inscrit dans le <strong>roman sentimental et pré-romantique du XVIIIe siècle</strong>. Prévost s'intéresse à la psychologie des passions et à l'analyse des sentiments intérieurs, préfigurant le romantisme du XIXe siècle.<br><br><strong>Problématique :</strong> Comment Prévost met-il en scène le coup de foudre comme une force irrésistible et soudaine qui fait basculer un personnage sage dans la transgression et la marginalité ?<br><br><strong>Annonce des axes :</strong> Nous étudierons <span class="mvt-badge">Mouvement 1</span> le contexte et l'ironie tragique du narrateur rétrospectif (l. 1-7), puis <span class="mvt-badge">Mouvement 2</span> la violence du coup de foudre et ses effets immédiats (l. 7-14), et enfin <span class="mvt-badge">Mouvement 3</span> le dialogue et la complicité naissante (l. 14-23).`,
+    mvt1: {
+      titre: 'Mouvement 1 (l. 1-7) – Un contexte chargé d\'ironie tragique',
+      contenu: `L'extrait commence par une exclamation de regret : <strong>"Hélas ! que ne le marquais-je un jour plus tôt !"</strong> Cette exclamation rétroactive crée ce qu'on appelle une <strong>ironie tragique</strong> : Des Grieux, qui raconte son passé, sait déjà que ce jour a été le début de sa ruine. Le lecteur est averti d'emblée.<br><br>
+      La vie de Des Grieux avant la rencontre est décrite comme irréprochable : on "admirait" sa "sagesse et sa retenue". Ces qualités vont être balayées en un instant. La rupture est donc totale.<br><br>
+      Le lieu (une hôtellerie), le moment (la veille du départ), l'objet de leur venue (simple curiosité) — tout semble fortuit. Prévost insiste sur le hasard de la rencontre pour montrer que le destin frappe sans prévenir.`
+    },
+    mvt2: {
+      titre: 'Mouvement 2 (l. 7-14) – Le coup de foudre : une passion soudaine et incontrôlable',
+      contenu: `La description de la rencontre est marquée par l'instantanéité : <strong>"je me trouvai enflammé tout d'un coup jusqu'au transport"</strong>. Le mot <strong>"transport"</strong> (qui signifie ici un égarement, une congestion cérébrale) dit bien la violence du sentiment — ce n'est pas un simple émoi, c'est presque une maladie.<br><br>
+      Le paradoxe est central : Des Grieux qui était "excessivement timide", "facile à déconcerter", surmonte d'un coup sa timidité : "loin d'être arrêté alors par cette faiblesse, je m'avançai". L'amour fait tomber toutes les inhibitions.<br><br>
+      Manon est décrite sobrement : "fort jeune", "fort charmante". Pas de portrait détaillé — c'est l'effet qu'elle produit qui compte, pas sa description physique. Cela renforce l'idée que c'est une passion de l'âme autant que des sens.`
+    },
+    mvt3: {
+      titre: 'Mouvement 3 (l. 14-23) – La complicité et la transgression',
+      contenu: `Le dialogue révèle immédiatement la personnalité de Manon : elle "reçut mes politesses sans paraître embarrassée". Elle est "plus expérimentée" que Des Grieux — c'est elle la véritable connaisseur des jeux amoureux, pas lui.<br><br>
+      L'information qu'elle lui donne est dramatique : ses parents l'envoient au couvent. Des Grieux réagit comme si c'était "un coup mortel pour mes désirs" — il vient de rencontrer cette fille et déjà son entrée au couvent lui est insupportable.<br><br>
+      La dernière réplique de Manon est ambiguë et très efficace : elle "ne prévoyait que trop qu'elle allait être malheureuse". Elle accepte son sort avec une résignation calculée — ou peut-être sincère. Cette ambiguïté du personnage de Manon (naïve ou manipulatrice ?) est maintenue tout au long du roman.`
+    },
+    conclusion: `Manon et Des Grieux sont deux personnages en marge : elle par sa liberté de mœurs, lui par sa passion qui le fait sortir de sa vie tracée.<br><br><strong>Ouverture :</strong> On peut relier ce texte au parcours 'Défendre et entretenir la liberté' : Manon incarne une liberté naturelle et transgressive que la société tente d'étouffer en l'envoyant au couvent. Des Grieux, en refusant cette séparation, défend aussi une forme de liberté — celle d'aimer librement, contre l'ordre familial et social imposé.`
+  },
+
+  manon2: {
+    tag: 'Roman', tagClass: 'tag-roman',
+    author: 'Abbé Prévost (1697-1763)',
+    title: 'La Mort de Manon',
+    oeuvre: 'Manon Lescaut, 1731 · Parcours : Personnages en marge, plaisirs du romanesque',
+    intro: `<strong>Auteur :</strong> L'Abbé Prévost (1697-1763), romancier français du XVIIIe siècle, auteur de <em>Manon Lescaut</em> (1731), roman emblématique de la passion amoureuse et de la marginalité.<br><br><strong>Œuvre :</strong> Cet extrait est le dénouement tragique de <em>Manon Lescaut</em>. Après avoir fui en Louisiane, Manon meurt dans les bras de Des Grieux, épuisée, loin de toute civilisation. Des Grieux raconte cette scène à la première personne, des années plus tard.<br><br><strong>Contexte :</strong> Les deux amants ont traversé tous les malheurs : trahisons, emprisonnements, déportation. Manon, affaiblie, meurt silencieusement dans la nuit. Des Grieux reste prostré sur son corps vingt-quatre heures.<br><br><span class="mvt-badge" style="background:rgba(236,72,153,0.15);border-color:var(--accent3);color:var(--accent3);">Mouvement littéraire</span> Même mouvement pré-romantique que la scène de rencontre. Ce dénouement relève du registre <strong>pathétique</strong> : Prévost cherche à émouvoir le lecteur avec retenue et dignité — l'économie de mots rend la douleur plus forte que le pathos excessif.<br><br><strong>Problématique :</strong> Comment Prévost construit-il une scène pathétique qui affirme la grandeur absolue de la passion amoureuse tout en révélant sa dimension tragique et destructrice ?<br><br><strong>Annonce des axes :</strong> Nous étudierons <span class="mvt-badge">Mouvement 1</span> l'impossibilité de raconter et la douleur indicible (l. 1-3), puis <span class="mvt-badge">Mouvement 2</span> l'agonie silencieuse de Manon et ses signes physiques (l. 4-12), et enfin <span class="mvt-badge">Mouvement 3</span> la désolation de Des Grieux et son geste ultime (l. 13-22).`,
+    mvt1: {
+      titre: 'Mouvement 1 (l. 1-3) – L\'impossibilité du récit : la douleur indicible',
+      contenu: `L'extrait s'ouvre sur une déclaration d'impuissance narrative : <strong>"Pardonnez si j'achève en peu de mots un récit qui me tue."</strong> Cette phrase est extraordinaire : le récit "tue" — les mots sont aussi douloureux que l'événement. La demande de pardon au lecteur crée une relation d'intimité et de compassion.<br><br>
+      "Toute ma vie est destinée à le pleurer" — le deuil de Manon est présenté comme éternel. Le mot <strong>"horreur"</strong> apparaît : "mon âme semble reculer d'horreur chaque fois que j'entreprends de l'exprimer". La mémoire elle-même est traumatique.<br><br>
+      Ce début in medias res (en plein milieu de l'action) capte immédiatement l'attention et installe le <strong>registre pathétique</strong> (qui cherche à émouvoir).`
+    },
+    mvt2: {
+      titre: 'Mouvement 2 (l. 4-12) – L\'agonie silencieuse de Manon',
+      contenu: `La mort de Manon est décrite à travers des signes physiques subtils : "mains froides et tremblantes", "soupirs fréquents", "silence à mes interrogations", "serrement de ses mains". Ce n'est pas une mort théâtrale — c'est une mort douce et silencieuse, ce qui la rend d'autant plus poignante.<br><br>
+      Des Grieux refuse d'y croire d'abord : "Je ne pris d'abord ce discours que pour un langage ordinaire dans l'infortune". Il se raccroche à l'espoir. Mais les signes s'accumulent inexorablement.<br><br>
+      La phrase clé : <strong>"je la perdis ; je reçus d'elle des marques d'amour au moment même qu'elle expirait"</strong>. La simultanéité de l'amour et de la mort est l'image la plus forte du romantisme : l'amour et la mort sont indissociables pour ce personnage.`
+    },
+    mvt3: {
+      titre: 'Mouvement 3 (l. 13-22) – La désolation et le geste ultime',
+      contenu: `Après la mort de Manon, Des Grieux reste "plus de vingt-quatre heures la bouche attachée sur le visage et sur les mains de ma chère Manon." Ce détail macabre dit l'amour absolu — il refuse de se séparer du corps même mort.<br><br>
+      <strong>"Mon dessein était d'y mourir"</strong> — il veut mourir sur elle. Mais une pensée pratique le retient : son corps à elle, après son propre décès, serait "la pâture des bêtes sauvages". Il décide donc de l'enterrer lui-même et d'"attendre la mort sur sa fosse".<br><br>
+      Le narrateur dit : <strong>"Mon âme ne suivit pas la sienne."</strong> Cette phrase est d'une mélancolie absolue. Il continue de vivre — mais c'est une vie "languissante et misérable". La survie est présentée comme une punition divine.`
+    },
+    conclusion: `La passion absolue est représentée comme une force qui transcende la mort.<br><br><strong>Ouverture :</strong> On peut relier ce dénouement au parcours 'Défendre et entretenir la liberté' : Manon, jusqu'à la mort, reste un personnage libre — sa déportation est une tentative de la société de la réduire au silence, mais même mourante, elle échappe à toute assignation. On peut aussi évoquer Antigone chez Anouilh : deux femmes que le pouvoir condamne mais qui conservent leur liberté intérieure jusqu'au bout.`
+  },
+
+  bouledesuif: {
+    tag: 'Parcours Roman', tagClass: 'tag-parcours',
+    author: 'Guy de Maupassant (1850-1893)',
+    title: 'Boule de Suif – La scène du repas',
+    oeuvre: 'Boule de Suif, 1880 · Parcours : Personnages en marge, plaisirs du romanesque',
+    intro: `<strong>Auteur :</strong> Guy de Maupassant (1850-1893) est un maître de la nouvelle réaliste et naturaliste française. Disciple de Flaubert et ami de Zola, il excelle dans l'observation précise de la société et la satire des hypocrisies bourgeoises.<br><br><strong>Œuvre :</strong> <em>Boule de Suif</em> (1880) est publiée dans <em>Les Soirées de Médan</em>, recueil collectif naturaliste. Elle raconte la fuite de Rouen pendant la guerre franco-prussienne de 1870 dans une diligence mêlant bourgeois et Élisabeth Rousset, surnommée Boule de Suif, une prostituée.<br><br><strong>Contexte :</strong> Le voyage s'éternise. Tout le monde a faim sauf Boule de Suif, la seule à avoir pris des provisions. Cette scène montre comment les bourgeois qui la méprisaient vont, un à un, accepter sa générosité avec hypocrisie.<br><br><span class="mvt-badge" style="background:rgba(236,72,153,0.15);border-color:var(--accent3);color:var(--accent3);">Mouvement littéraire</span> Ce texte s'inscrit dans le <strong>naturalisme</strong> du XIXe siècle, fondé par Zola : observation scientifique du réel, description sans idéalisation, étude des milieux sociaux et dénonciation des hypocrisies.<br><br><strong>Problématique :</strong> Comment Maupassant retourne-t-il la hiérarchie sociale dans cette scène de repas pour révéler l'hypocrisie bourgeoise et construire Boule de Suif comme personnage moralement supérieur ?<br><br><strong>Annonce des axes :</strong> Nous étudierons <span class="mvt-badge">Mouvement 1</span> la description appétissante du repas et les regards de convoitise mêlés de mépris (l. 1-13), puis <span class="mvt-badge">Mouvement 2</span> la capitulation progressive et hypocrite des bourgeois (l. 14-30).`,
+    mvt1: {
+      titre: 'Mouvement 1 (l. 1-13) – Les provisions et la convoitise',
+      contenu: `La description du panier de Boule de Suif est détaillée et appétissante : "une vaste terrine dans laquelle deux poulets entiers, tout découpés, avaient confit sous leur gelée". Maupassant prend le temps de décrire la nourriture avec soin — cela contraste avec la misère physique des autres passagers.<br><br>
+      Les regards des bourgeois sont révélateurs : <strong>"Tous les regards étaient tendus vers elle."</strong> Ce simple "tous" est dévastateur. Ces gens qui la méprisaient publiquement la regardent maintenant avec faim et désir.<br><br>
+      La réaction des dames est violente et hypocrite : <strong>"Le mépris des dames pour cette fille devenait féroce, comme une envie de la tuer"</strong>. Maupassant met en évidence que le mépris de classe est exacerbé par la jalousie — elles ne peuvent pas supporter d'avoir besoin de quelqu'un qu'elles considèrent inférieur.`
+    },
+    mvt2: {
+      titre: 'Mouvement 2 (l. 14-30) – La capitulation hypocrite',
+      contenu: `C'est Loiseau, le commerçant, qui craque le premier — et qui le fait avec aplomb : <strong>"À la bonne heure, Madame a eu plus de précaution que nous."</strong> Le mot "Madame" (au lieu du prénom méprisable) est déjà une capitulation symbolique.<br><br>
+      Le processus de contamination est comique et cruel : Loiseau mange, les bonnes sœurs acceptent, puis Cornudet, puis Mme Loiseau après avoir "résisté longtemps". Et le mari formule la demande avec une politesse exagérée : <strong>"leur charmante compagne"</strong>.<br><br>
+      La scène se clôt avec le comte et la comtesse de Bréville qui refusent encore — comparés à Tantale, condamné à mourir de faim devant de la nourriture qu'il ne peut pas atteindre. Leur orgueil de classe les condamne littéralement à souffrir.<br><br>
+      La générosité de Boule de Suif est totale et sans calcul — elle partage avec tout le monde, même les religieuses. Sa vertu morale contraste avec la mesquinerie de ses voisins.`
+    },
+    conclusion: `Boule de Suif est un personnage en marge non par vice, mais par sa condition sociale — et cette marginalité la rend plus humaine et plus noble que ceux qui l'excluent.<br><br><strong>Ouverture :</strong> On peut relier ce texte au parcours 'Défendre et entretenir la liberté' : Boule de Suif est une femme que la société opprime par le mépris et l'exclusion. Maupassant montre que l'oppression sociale fonctionne comme la tyrannie politique décrite par La Boétie : elle repose sur le consentement de ceux qui participent au mépris.`
+  },
+
+  musset: {
+    tag: 'Théâtre', tagClass: 'tag-theatre',
+    author: 'Alfred de Musset (1810-1857)',
+    title: 'On ne badine pas avec l\'amour – Acte II, Scène 3',
+    oeuvre: 'Acte II, Scène 3 · 1834 · Parcours : Les jeux du cœur et de la parole',
+    intro: `<strong>Auteur :</strong> Alfred de Musset (1810-1857) est l'un des grands poètes et dramaturges romantiques français. Sa vie amoureuse tumultueuse (notamment avec George Sand) nourrit une œuvre marquée par la douleur et la désillusion.<br><br><strong>Œuvre :</strong> <em>On ne badine pas avec l'amour</em> est un proverbe dramatique publié en 1834, genre qui mêle comédie et tragédie. Le titre lui-même est une leçon : l'amour n'est pas un jeu, et ceux qui le traitent comme tel en paient le prix. La pièce se termine par la mort de Rosette.<br><br><strong>Contexte :</strong> Perdican est revenu au château après ses études. Sa cousine Camille le repousse. Blessé, il se rapproche de Rosette, paysanne simple et sincère. Dans cette scène, il l'embrasse, joue avec ses sentiments — en partie par sincérité, en partie pour rendre Camille jalouse.<br><br><span class="mvt-badge" style="background:rgba(236,72,153,0.15);border-color:var(--accent3);color:var(--accent3);">Mouvement littéraire</span> Cette pièce s'inscrit dans le <strong>romantisme du XIXe siècle</strong>, qui valorise les émotions et le moi individuel. Musset mêle registre comique et registre tragique pour créer une tension dramatique unique.<br><br><strong>Problématique :</strong> Comment cette scène illustre-t-elle les jeux du cœur et de la parole en opposant l'ambiguïté calculée de Perdican à la lucidité naturelle et douloureuse de Rosette ?<br><br><strong>Annonce des axes :</strong> Nous étudierons <span class="mvt-badge">Mouvement 1</span> la lucidité simple mais juste de Rosette face aux baisers de Perdican (l. 1-9), puis <span class="mvt-badge">Mouvement 2</span> le jeu ambigu de Perdican entre tendresse sincère et manipulation (l. 10-24).`,
+    mvt1: {
+      titre: 'Mouvement 1 (l. 1-9) – Rosette : une lucidité simple et blessée',
+      contenu: `La scène s'ouvre sur une question directe de Rosette : <strong>"Croyez-vous que cela me fasse du bien, tous ces baisers que vous me donnez ?"</strong> Cette interpellation déstabilise d'emblée : c'est la paysanne simple qui pose la question grave, pas le noble éduqué.<br><br>
+      La réponse de Perdican est habile mais évasive : il assimile ses baisers à ceux d'un frère ("N'es-tu pas la sœur de Camille ? Ne suis-je pas ton frère comme le sien ?"). C'est un argument rhétorique qui esquive la vraie question.<br><br>
+      Rosette réfute avec une précision touchante : <strong>"Des mots sont des mots et des baisers sont des baisers."</strong> Cette antithèse révèle une intelligence naturelle que l'éducation n'a pas donnée à Rosette, mais que l'expérience lui a enseignée. Elle sait que les baisers ont un sens physique et affectif que les mots ne peuvent pas transformer.`
+    },
+    mvt2: {
+      titre: 'Mouvement 2 (l. 10-24) – Le jeu de Perdican : séduction et blessure',
+      contenu: `Perdican admire Rosette — "Que tu es jolie, mon enfant !" — mais le mot <strong>"enfant"</strong> trahit une condescendance : il la traite comme une enfant, pas comme une égale. Il est sincèrement touché par elle, mais l'utilise aussi pour se venger de Camille.<br><br>
+      La question de Rosette — <strong>"Votre mariage est donc manqué ?"</strong> — montre qu'elle comprend la situation. Elle sait qu'elle est un recours consolatoire, pas un premier choix. C'est douloureux.<br><br>
+      Perdican est d'une élégance rhétorique : "De tout ce qui te plaira, de tout ce qui peut passer sur tes lèvres sans leur ôter ce sourire céleste que je respecte plus que ma vie." Il l'embrasse immédiatement après — ce qui contredit le mot "respecte". Rosette le note : "Vous respectez mon sourire, mais vous ne respectez guère mes lèvres."<br><br>
+      La chute est poétique et troublante : "voilà une goutte de pluie qui me tombe sur la main, et cependant le ciel est pur." La pluie par beau temps : ce sont les larmes de Perdican, qui pleure sans s'en rendre compte. Le jeu amoureux touche quelque chose de vrai chez lui — mais ce vrai sera destructeur pour Rosette.`
+    },
+    conclusion: `Cette scène annonce tragiquement la mort de Rosette à la fin de la pièce : le badinage de Perdican aura des conséquences mortelles.<br><br><strong>Ouverture :</strong> On peut relier cette scène au parcours 'Les jeux du cœur et de la parole' : Perdican utilise les mots comme un instrument de pouvoir sur Rosette, qui n'a pas les mots pour se défendre. La parole devient ici un outil d'oppression — ce qui rejoint le parcours 'Défendre et entretenir la liberté' : la liberté de Rosette est niée par l'asymétrie sociale et langagière.`
+  }
+};
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const idx = ['home','methode','textes','cursive','quiz','grammaire','fiches','resumes'].indexOf(id);
+  if(idx >= 0) document.querySelectorAll('.nav-btn')[idx].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showText(id) {
+  const t = texts[id];
+  if(!t) return;
+  
+  let html = `
+    <div class="text-header">
+      <div class="author">${t.author}</div>
+      <h2>${t.title}</h2>
+      <div class="oeuvre">${t.oeuvre}</div>
+    </div>
+    
+    <div class="oral-block" style="border-color:var(--accent);">
+      <div class="oral-block-title">
+        <div class="oral-block-icon" style="background:rgba(124,58,237,0.2);">🎤</div>
+        <h3>Introduction – À dire à l'oral</h3>
+        <span class="timing">~1-2 min</span>
+      </div>
+      <div class="speech">${t.intro}</div>
+    </div>
+    
+    <div class="oral-block">
+      <div class="oral-block-title">
+        <div class="oral-block-icon" style="background:rgba(168,85,247,0.2);">📖</div>
+        <h3>${t.mvt1.titre}</h3>
+        <span class="timing">Analyse</span>
+      </div>
+      <div class="speech">${t.mvt1.contenu}</div>
+    </div>
+    
+    <div class="oral-block">
+      <div class="oral-block-title">
+        <div class="oral-block-icon" style="background:rgba(168,85,247,0.2);">📖</div>
+        <h3>${t.mvt2.titre}</h3>
+        <span class="timing">Analyse</span>
+      </div>
+      <div class="speech">${t.mvt2.contenu}</div>
+    </div>`;
+  
+  if(t.mvt3) {
+    html += `
+    <div class="oral-block">
+      <div class="oral-block-title">
+        <div class="oral-block-icon" style="background:rgba(168,85,247,0.2);">📖</div>
+        <h3>${t.mvt3.titre}</h3>
+        <span class="timing">Analyse</span>
+      </div>
+      <div class="speech">${t.mvt3.contenu}</div>
+    </div>`;
+  }
+  
+  html += `
+    <div class="oral-block" style="border-color:var(--green);">
+      <div class="oral-block-title">
+        <div class="oral-block-icon" style="background:rgba(16,185,129,0.2);">✅</div>
+        <h3>Conclusion – À dire à l'oral</h3>
+        <span class="timing">~30 sec</span>
+      </div>
+      <div class="speech">${t.conclusion}</div>
+    </div>
+    
+    <div class="tip-box" style="margin-top:1rem;">N'oublie pas : après ta conclusion, l'examinateur te posera une question de grammaire sur une phrase du texte. Reste calme, prends le temps de réfléchir.</div>`;
+  
+  document.getElementById('text-content').innerHTML = html;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-text').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleAnswer(btn) {
+  const answer = btn.nextElementSibling;
+  const visible = answer.classList.toggle('visible');
+  btn.textContent = visible ? 'Masquer la réponse' : 'Voir la réponse';
+  btn.classList.toggle('shown', visible);
+}
+
+const grammarData = {
+  venus: {
+    title: "Vénus Anadyomène – Rimbaud",
+    questions: [
+      {
+        type: "Négation",
+        phrase: "«&nbsp;Avec des déficits assez mal ravaudés&nbsp;»",
+        question: "Ce vers ne contient pas de négation explicite, mais analysez la négation dans : «&nbsp;Les singularités qu'il faut voir à la loupe…&nbsp;» — que suggère cette formulation sur ce qu'on ne peut PAS voir à l'œil nu ?",
+        reponse: "La négation est implicite : «&nbsp;qu'il faut voir à la loupe&nbsp;» sous-entend qu'on ne peut <em>pas</em> les voir normalement. C'est une négation par euphémisme. Rimbaud ironise : ces «&nbsp;singularités&nbsp;» (difformités) sont si choquantes qu'on feint de ne pas les voir. Effet : la formulation faussement polie renforce le sarcasme."
+      },
+      {
+        type: "Subordonnée relative",
+        phrase: "«&nbsp;Comme d'un cercueil vert en fer blanc, une tête / De femme à cheveux bruns fortement pommadés / D'une vieille baignoire émerge, lente et bête&nbsp;»",
+        question: "Analysez la proposition relative dans : «&nbsp;Les reins portent deux mots gravés : Clara Venus&nbsp;» — il n'y en a pas, mais repérez et analysez la relative dans «&nbsp;D'une vieille baignoire [qui émerge]&nbsp;» si on transformait la phrase.",
+        reponse: "Dans le sonnet, analysons la relative de «&nbsp;Belle hideusement d'un ulcère à l'anus&nbsp;» : ce n'est pas une relative mais un oxymore. Analysons plutôt «&nbsp;à cheveux bruns fortement pommadés&nbsp;» : c'est un groupe participial passé qui fonctionne comme une relative abrégée (= «&nbsp;qui sont fortement pommadés&nbsp;»). Antécédent : «&nbsp;cheveux bruns&nbsp;». Fonction : complément de l'antécédent. Effet : la description minutieuse des cheveux gras renforce l'effet de dégoût."
+      },
+      {
+        type: "Interrogation",
+        phrase: "Le sonnet ne contient pas de phrase interrogative directe — c'est un choix de Rimbaud.",
+        question: "Transformez la phrase affirmative «&nbsp;on remarque surtout des singularités qu'il faut voir à la loupe&nbsp;» en question rhétorique directe. Quel effet cela produirait-il ?",
+        reponse: "On obtiendrait : «&nbsp;Faut-il une loupe pour voir ces singularités ?&nbsp;» ou «&nbsp;Ces singularités, peut-on vraiment les voir à l'œil nu ?&nbsp;». L'interrogation directe rendrait le ton plus agressif et frontal. Rimbaud choisit l'affirmative pour simuler un ton clinique et neutre — ce qui est plus ironique et plus cruel que l'indignation directe."
+      }
+    ]
+  },
+  musique: {
+    title: "À la musique – Rimbaud",
+    questions: [
+      {
+        type: "Négation",
+        phrase: "«&nbsp;Je n'ai guère d'esprit&nbsp;» (dans le poème de Rosette) / Dans À la musique : «&nbsp;point de franche lippée&nbsp;»",
+        question: "Analysez la négation dans : «&nbsp;Car quoi ? Rien d'assuré, point de franche lippée.&nbsp;» (v.19)",
+        reponse: "Deux négations : «&nbsp;rien&nbsp;» (pronom négatif = négation totale portant sur «&nbsp;d'assuré&nbsp;») et «&nbsp;point&nbsp;» (adverbe de négation totale, équivalent de «&nbsp;pas du tout&nbsp;»). Forme affirmative : «&nbsp;Tout est assuré, on mange gratuitement.&nbsp;» La double négation insiste sur la misère absolue de la vie du Loup/des gens libres — Rimbaud applique ici au contexte du parc la même logique que La Fontaine. Effet : le rythme haché des négations mime l'absence, le manque."
+      },
+      {
+        type: "Subordonnée circonstancielle",
+        phrase: "«&nbsp;Tous les bourgeois poussifs qu'étranglent les chaleurs / Portent, les jeudis soirs, leurs bêtises jalouses.&nbsp;»",
+        question: "Analysez la subordonnée dans : «&nbsp;Et, rendus amoureux par le chant des trombones, / Très naïfs, et fumant des roses, les pioupious / Caressent les bébés pour enjôler les bonnes…&nbsp;» — relevez et analysez la circonstancielle de but.",
+        reponse: "«&nbsp;pour enjôler les bonnes&nbsp;» : proposition subordonnée circonstancielle de but (aussi appelée finale), introduite par la préposition «&nbsp;pour&nbsp;» + infinitif. Fonction : complément circonstanciel de but du verbe «&nbsp;Caressent&nbsp;». On peut la remplacer par «&nbsp;afin d'enjôler les bonnes&nbsp;» ou «&nbsp;dans le but d'enjôler les bonnes&nbsp;». Effet : Rimbaud révèle cyniquement que les soldats ne font semblant de s'attendrir que pour séduire les servantes — geste faussement innocent."
+      },
+      {
+        type: "Subordonnée relative",
+        phrase: "«&nbsp;Sur la place taillée en mesquines pelouses&nbsp;»",
+        question: "Analysez la relative dans : «&nbsp;Tous les bourgeois poussifs qu'étranglent les chaleurs&nbsp;» (v.3)",
+        reponse: "«&nbsp;qu'étranglent les chaleurs&nbsp;» : proposition subordonnée relative introduite par le pronom relatif «&nbsp;que&nbsp;» (forme élidée). Antécédent : «&nbsp;bourgeois poussifs&nbsp;». Fonction de la relative : complément de l'antécédent. Fonction du pronom relatif «&nbsp;que&nbsp;» : COD du verbe «&nbsp;étranglent&nbsp;» (les chaleurs étranglent qui ? que → les bourgeois). Effet : l'image d'étranglement est violente — les bourgeois sont victimes de leurs propres excès physiques."
+      }
+    ]
+  },
+  reve: {
+    title: "Un Rêve – Aloysius Bertrand",
+    questions: [
+      {
+        type: "Subordonnée circonstancielle",
+        phrase: "«&nbsp;Il était nuit.&nbsp;»",
+        question: "Analysez la circonstancielle dans : «&nbsp;les torches des pénitents noirs s'étaient éteintes sous des torrents de pluie&nbsp;»",
+        reponse: "«&nbsp;sous des torrents de pluie&nbsp;» est un groupe prépositionnel (et non une subordonnée conjonctive) qui exprime la cause. Si on voulait le transformer en subordonnée : «&nbsp;parce que des torrents de pluie tombaient&nbsp;» → proposition subordonnée circonstancielle de cause. Alternativement : «&nbsp;la foule s'était écoulée avec les ruisseaux débordés&nbsp;» — «&nbsp;avec les ruisseaux débordés&nbsp;» = circonstanciel de manière. Effet : la pluie qui éteint les torches symbolise la fin du cauchemar, la nature qui dissout la mort."
+      },
+      {
+        type: "Négation",
+        phrase: "«&nbsp;Mais moi, la barre du bourreau s'était brisée comme un verre&nbsp;»",
+        question: "Le texte ne contient pas de négation directe — analysez l'absence de négation sur le narrateur et transformez : «&nbsp;je poursuivais d'autres songes vers le réveil&nbsp;» en phrase négative. Quel effet ?",
+        reponse: "Phrase négative : «&nbsp;je ne poursuivais plus d'autres songes vers le réveil&nbsp;» ou «&nbsp;je ne m'éveillais pas encore&nbsp;». L'absence de négation dans l'original est significative : le narrateur ne nie rien, ne résiste pas — il se laisse porter vers le réveil. Contrairement au moine qui «&nbsp;expirait&nbsp;» et à la jeune fille pendue, le narrateur survit positivement, dans un mouvement de continuation («&nbsp;poursuivais&nbsp;»). La syntaxe affirmative mime la liberté retrouvée."
+      },
+      {
+        type: "Subordonnée relative",
+        phrase: "«&nbsp;une jeune fille qui se débattait pendue aux branches d'un chêne&nbsp;»",
+        question: "Analysez la relative dans cette phrase.",
+        reponse: "«&nbsp;qui se débattait pendue aux branches d'un chêne&nbsp;» : proposition subordonnée relative introduite par le pronom relatif «&nbsp;qui&nbsp;». Antécédent : «&nbsp;une jeune fille&nbsp;». Fonction de la relative : complément de l'antécédent. Fonction de «&nbsp;qui&nbsp;» : sujet du verbe «&nbsp;débattait&nbsp;». Effet : la relative au passé imparfait donne une image figée, comme un tableau — cette jeune fille est présentée dans la durée de son agonie, ce qui renforce l'horreur onirique. C'est caractéristique du style pictural de Bertrand (sous-titre : «&nbsp;à la manière de Rembrandt&nbsp;»)."
+      }
+    ]
+  },
+  boetie1: {
+    title: "Pauvres et misérables peuples – La Boétie",
+    questions: [
+      {
+        type: "Interrogation",
+        phrase: "«&nbsp;D'où a-t-il pris tant d'yeux dont il vous épie, si vous ne lui donnez ?&nbsp;»",
+        question: "Analysez cette phrase interrogative directe et transformez-la en interrogation indirecte.",
+        reponse: "C'est une <strong>interrogation directe</strong> (présence d'un point d'interrogation, inversion du sujet «&nbsp;a-t-il&nbsp;»). Transformation en interrogation indirecte : «&nbsp;On se demande d'où il a pris tant d'yeux dont il nous épie, si nous ne lui donnons.&nbsp;» Modifications : suppression du point d'interrogation, suppression de l'inversion, ajout d'un verbe introducteur. Effet de la question directe dans le texte : La Boétie interpelle directement les peuples, créant un effet accusateur et rhétorique — ces questions n'attendent pas de réponse (questions rhétoriques), elles <em>démontrent</em>."
+      },
+      {
+        type: "Négation",
+        phrase: "«&nbsp;Soyez décidés à ne plus servir et vous serez libres.&nbsp;»",
+        question: "Analysez la négation dans cette phrase.",
+        reponse: "«&nbsp;ne plus servir&nbsp;» : négation partielle (ou de continuation) avec «&nbsp;ne…plus&nbsp;». Elle indique l'arrêt d'une action en cours. Forme affirmative : «&nbsp;Soyez décidés à continuer à servir…&nbsp;» — absurde dans ce contexte. La négation «&nbsp;ne…plus&nbsp;» est fondamentale : elle implique qu'on <em>servait</em> avant, et qu'il suffit d'<em>arrêter</em>. Ce n'est pas une révolution violente que propose La Boétie — juste un refus. C'est le paradoxe central du <em>Discours</em> : la liberté est accessible par simple abstention."
+      },
+      {
+        type: "Subordonnée circonstancielle",
+        phrase: "«&nbsp;vous pouvez vous délivrer si vous faites l'essai, non pas de vous en délivrer, mais seulement de vouloir le faire.&nbsp;»",
+        question: "Analysez la subordonnée circonstancielle dans cette phrase.",
+        reponse: "«&nbsp;si vous faites l'essai&nbsp;» : proposition subordonnée circonstancielle de condition (ou conditionnelle), introduite par la conjonction «&nbsp;si&nbsp;». Fonction : complément circonstanciel de condition du verbe «&nbsp;pouvez&nbsp;». On peut la déplacer : «&nbsp;Si vous faites l'essai, vous pouvez vous délivrer.&nbsp;» La condition exprimée par «&nbsp;si&nbsp;» est paradoxale : l'essai consiste «&nbsp;non pas de se délivrer, mais de vouloir le faire&nbsp;» — la liberté ne demande qu'une volonté, pas un acte. Effet : la condition est présentée comme minimale, presque évidente, ce qui rend l'inaction des peuples encore plus incompréhensible."
+      },
+      {
+        type: "Subordonnée relative",
+        phrase: "«&nbsp;Celui qui vous maîtrise tant n'a que deux yeux&nbsp;»",
+        question: "Analysez la relative dans cette phrase.",
+        reponse: "«&nbsp;qui vous maîtrise tant&nbsp;» : proposition subordonnée relative introduite par le pronom relatif «&nbsp;qui&nbsp;». Antécédent : «&nbsp;Celui&nbsp;» (pronom démonstratif). Fonction de la relative : complément de l'antécédent. Fonction de «&nbsp;qui&nbsp;» : sujet du verbe «&nbsp;maîtrise&nbsp;». Effet : La Boétie désigne le tyran sans jamais le nommer directement — il est juste «&nbsp;Celui qui…&nbsp;». Cette relative dépersonnalise le tyran et insiste sur sa fonction (maîtriser) plutôt que sur son identité. C'est une stratégie rhétorique : montrer que n'importe qui peut être tyran si on lui en donne le pouvoir."
+      }
+    ]
+  },
+  boetie2: {
+    title: "Deux Spartiates – La Boétie",
+    questions: [
+      {
+        type: "Subordonnée circonstancielle",
+        phrase: "«&nbsp;Car il était impossible que le Persan regrettât la liberté, ne l'ayant jamais connue&nbsp;»",
+        question: "Analysez la circonstancielle dans : «&nbsp;ni que le Lacédémonien endurât la sujétion, ayant goûté la liberté.&nbsp;»",
+        reponse: "«&nbsp;ayant goûté la liberté&nbsp;» est une proposition participiale (participe présent «&nbsp;ayant goûté&nbsp;») qui exprime la cause. Si on la transforme en subordonnée conjonctive : «&nbsp;parce qu'il avait goûté la liberté&nbsp;» → proposition subordonnée circonstancielle de cause introduite par «&nbsp;parce que&nbsp;». Fonction : complément circonstanciel de cause. Effet : la forme participiale est plus ramassée, plus élégante — La Boétie condense sa démonstration. La cause est évidente, donc il n'a pas besoin de la développer."
+      },
+      {
+        type: "Négation",
+        phrase: "«&nbsp;de la liberté, de son goût, de sa douceur, tu ne sais rien.&nbsp;»",
+        question: "Analysez la négation dans cette phrase.",
+        reponse: "«&nbsp;ne…rien&nbsp;» : négation totale portant sur le COD «&nbsp;rien&nbsp;» (pronom indéfini négatif). Forme affirmative : «&nbsp;de la liberté, de son goût, de sa douceur, tu sais tout.&nbsp;» La négation totale («&nbsp;rien&nbsp;» = zéro connaissance) est absolue et sans nuance — c'est rhétoriquement efficace. Le Spartiate ne dit pas «&nbsp;tu n'en sais pas assez&nbsp;», il dit «&nbsp;tu n'en sais rien du tout&nbsp;». Cela souligne l'abîme entre l'expérience de la liberté et son absence totale."
+      },
+      {
+        type: "Interrogation",
+        phrase: "«&nbsp;Que ne me donnez-vous un poignard ?&nbsp;»",
+        question: "Analysez cette phrase interrogative directe. Est-ce une vraie question ?",
+        reponse: "C'est une <strong>interrogation directe</strong> avec inversion du sujet («&nbsp;donnez-vous&nbsp;»), marquée par le point d'interrogation. Transformation en indirecte : «&nbsp;Le jeune garçon demanda à son précepteur de lui donner un poignard.&nbsp;» Mais ce n'est pas une vraie question — c'est une question rhétorique qui équivaut à un ordre ou une demande pressante. «&nbsp;Que ne…&nbsp;» est une tournure archaïque exprimant le regret ou le souhait («&nbsp;Pourquoi ne me donnez-vous pas…&nbsp;»). Effet : La Boétie utilise cette question pour montrer l'impétuosité naturelle de Caton face à l'injustice — il n'attend pas, il agit (ou veut agir)."
+      }
+    ]
+  },
+  loup: {
+    title: "Le Loup et le Chien – La Fontaine",
+    questions: [
+      {
+        type: "Interrogation",
+        phrase: "«&nbsp;Qu'est-ce là ? lui dit-il. Rien. Quoi ? rien ? Peu de chose. / Mais encor ? Le collier dont je suis attaché&nbsp;»",
+        question: "Analysez les phrases interrogatives dans cet échange. Sont-elles directes ou indirectes ?",
+        reponse: "Trois interrogations directes successives : «&nbsp;Qu'est-ce là ?&nbsp;» (interrogation totale avec «&nbsp;est-ce&nbsp;»), «&nbsp;Quoi ? rien ?&nbsp;» (interrogation de surprise, elliptique), «&nbsp;Mais encor ?&nbsp;» (interrogation de relance, très elliptique). Toutes sont directes (ponctuation, inversion ou ellipse du verbe). Transformation en indirecte : «&nbsp;Il lui demanda ce que c'était là.&nbsp;» La fragmentation des répliques en mini-questions crée un rythme haché qui mime la curiosité et la méfiance croissante du Loup. La Fontaine rend le dialogue très vivant et théâtral."
+      },
+      {
+        type: "Négation",
+        phrase: "«&nbsp;de tous vos repas / Je ne veux en aucune sorte&nbsp;»",
+        question: "Analysez la négation dans cette phrase.",
+        reponse: "«&nbsp;ne…en aucune sorte&nbsp;» : négation totale renforcée. «&nbsp;En aucune sorte&nbsp;» = sous aucune forme, d'aucune manière. Forme affirmative : «&nbsp;de tous vos repas je veux bien.&nbsp;» La négation est absolue et catégorique — le Loup ne dit pas «&nbsp;je ne veux pas vraiment&nbsp;», il dit «&nbsp;je refuse totalement, sous quelque forme que ce soit&nbsp;». Cela marque la rupture définitive. Effet : cette négation totale clôt le dialogue et illustre que pour le Loup, la liberté est une valeur non négociable."
+      },
+      {
+        type: "Subordonnée relative",
+        phrase: "«&nbsp;Le collier dont je suis attaché / De ce que vous voyez est peut-être la cause.&nbsp;»",
+        question: "Analysez la relative dans : «&nbsp;dont je suis attaché&nbsp;»",
+        reponse: "«&nbsp;dont je suis attaché&nbsp;» : proposition subordonnée relative introduite par le pronom relatif «&nbsp;dont&nbsp;». Antécédent : «&nbsp;Le collier&nbsp;». Fonction de la relative : complément de l'antécédent. Fonction de «&nbsp;dont&nbsp;» : complément du verbe «&nbsp;attaché&nbsp;» (attaché par quoi → par le collier → dont). Remarque : «&nbsp;dont&nbsp;» remplace «&nbsp;par lequel&nbsp;» ou «&nbsp;avec lequel&nbsp;». Effet : le Chien minimise («&nbsp;peut-être la cause&nbsp;», «&nbsp;peu de chose&nbsp;») — le collier n'est qu'un détail pour lui, mais c'est pour le Loup la révélation de toute sa servitude."
+      }
+    ]
+  },
+  manon1: {
+    title: "La Rencontre de Manon – Abbé Prévost",
+    questions: [
+      {
+        type: "Négation",
+        phrase: "«&nbsp;moi, qui n'avais jamais pensé à la différence des sexes, ni regardé une fille avec un peu d'attention&nbsp;»",
+        question: "Analysez les négations dans cette phrase.",
+        reponse: "Deux négations : «&nbsp;n'avais jamais pensé&nbsp;» (négation totale temporelle : jamais = à aucun moment) et «&nbsp;ni regardé&nbsp;» (coordination négative qui prolonge la même négation). Forme affirmative : «&nbsp;moi, qui avais toujours pensé à la différence des sexes, et regardé les filles avec attention.&nbsp;» La double négation souligne l'innocence totale de Des Grieux avant la rencontre — il n'a littéralement aucune expérience. Cela rend le coup de foudre encore plus violent : c'est une première fois absolue."
+      },
+      {
+        type: "Subordonnée circonstancielle",
+        phrase: "«&nbsp;L'amour me rendait déjà si éclairé, depuis un moment qu'il était dans mon cœur, que je regardai ce dessein comme un coup mortel pour mes désirs.&nbsp;»",
+        question: "Analysez les subordonnées dans cette phrase complexe.",
+        reponse: "Structure corrélative : «&nbsp;si éclairé… que je regardai&nbsp;» → proposition subordonnée circonstancielle de conséquence introduite par «&nbsp;que&nbsp;» en corrélation avec «&nbsp;si&nbsp;». Fonction : complément circonstanciel de conséquence. Deuxième subordonnée : «&nbsp;depuis un moment qu'il était dans mon cœur&nbsp;» → circonstancielle de temps introduite par «&nbsp;que&nbsp;» (après «&nbsp;depuis un moment&nbsp;»). Effet : la structure «&nbsp;si…que&nbsp;» (conséquence) montre la rapidité et l'intensité de la transformation — en un instant, l'amour a changé sa façon de voir le monde."
+      },
+      {
+        type: "Interrogation",
+        phrase: "«&nbsp;Je lui demandai ce qui l'amenait à Amiens et si elle y avait quelques personnes de connaissance.&nbsp;»",
+        question: "Analysez les interrogations dans cette phrase. Sont-elles directes ou indirectes ?",
+        reponse: "Deux interrogations <strong>indirectes</strong> : «&nbsp;ce qui l'amenait à Amiens&nbsp;» (interrogative indirecte introduite par «&nbsp;ce qui&nbsp;», COD de «&nbsp;demandai&nbsp;») et «&nbsp;si elle y avait quelques personnes de connaissance&nbsp;» (interrogative indirecte totale introduite par «&nbsp;si&nbsp;», également COD de «&nbsp;demandai&nbsp;»). Transformation en directe : «&nbsp;Il lui demanda : 'Qu'est-ce qui vous amène à Amiens ? Y avez-vous des connaissances ?'&nbsp;» Effet de l'indirect : le discours indirect donne un ton de récit distancié — Des Grieux raconte, il ne revit pas la scène. Cela renforce la tonalité mémorielle et mélancolique du roman."
+      }
+    ]
+  },
+  manon2: {
+    title: "La Mort de Manon – Abbé Prévost",
+    questions: [
+      {
+        type: "Négation",
+        phrase: "«&nbsp;N'exigez point de moi que je vous décrive mes sentiments, ni que je vous rapporte ses dernières expressions.&nbsp;»",
+        question: "Analysez les négations dans cette phrase.",
+        reponse: "«&nbsp;N'exigez point&nbsp;» : négation à l'impératif avec «&nbsp;ne…point&nbsp;» (équivalent renforcé de «&nbsp;pas&nbsp;», plus littéraire). Forme affirmative : «&nbsp;Exigez de moi que je vous décrive…&nbsp;». Double négation : «&nbsp;N'exigez point… ni que&nbsp;» — la conjonction «&nbsp;ni&nbsp;» prolonge la négation sur un deuxième élément. L'accumulation des négations mime le refus de Des Grieux de revivre la scène — il ne peut pas mettre en mots. La négation ici est aussi psychologique : effacer pour ne pas souffrir."
+      },
+      {
+        type: "Subordonnée circonstancielle",
+        phrase: "«&nbsp;je n'osais pousser le moindre souffle, dans la crainte de troubler son sommeil.&nbsp;»",
+        question: "Analysez la circonstancielle dans cette phrase.",
+        reponse: "«&nbsp;dans la crainte de troubler son sommeil&nbsp;» : groupe prépositionnel exprimant le but négatif (ou la précaution). Si on le transforme en subordonnée : «&nbsp;de peur que / de crainte que je ne troublasse son sommeil&nbsp;» → proposition subordonnée circonstancielle de but (finale négative) introduite par «&nbsp;de peur que&nbsp;» + subjonctif. Fonction : complément circonstanciel de but. Effet : cette périphrase (au lieu d'une vraie subordonnée) alourdit délibérément la phrase — Des Grieux s'exprime avec préciosité même dans le pire moment, ce qui est caractéristique du style XVIIIe siècle."
+      },
+      {
+        type: "Subordonnée relative",
+        phrase: "«&nbsp;Mon âme ne suivit pas la sienne.&nbsp;»",
+        question: "Analysez la relative dans : «&nbsp;Je vous raconte un malheur qui n'eut jamais d'exemple&nbsp;»",
+        reponse: "«&nbsp;qui n'eut jamais d'exemple&nbsp;» : proposition subordonnée relative introduite par le pronom relatif «&nbsp;qui&nbsp;». Antécédent : «&nbsp;un malheur&nbsp;». Fonction de la relative : complément de l'antécédent. Fonction de «&nbsp;qui&nbsp;» : sujet du verbe «&nbsp;eut&nbsp;» (passé simple). La négation «&nbsp;ne…jamais&nbsp;» à l'intérieur de la relative renforce l'hyperbole : ce malheur est présenté comme unique dans l'histoire humaine. Effet : Des Grieux place sa souffrance hors du commun, ce qui est caractéristique du registre pathétique et de la passion romantique avant l'heure."
+      }
+    ]
+  },
+  bouledesuif: {
+    title: "Boule de Suif – Maupassant",
+    questions: [
+      {
+        type: "Subordonnée relative",
+        phrase: "«&nbsp;un large panier couvert d'une serviette blanche&nbsp;»",
+        question: "Analysez la relative dans : «&nbsp;une vaste terrine dans laquelle deux poulets entiers, tout découpés, avaient confit sous leur gelée&nbsp;»",
+        reponse: "«&nbsp;dans laquelle deux poulets entiers, tout découpés, avaient confit sous leur gelée&nbsp;» : proposition subordonnée relative introduite par le pronom relatif «&nbsp;laquelle&nbsp;» (forme composée de «&nbsp;qui&nbsp;», précédée de la préposition «&nbsp;dans&nbsp;»). Antécédent : «&nbsp;une vaste terrine&nbsp;». Fonction de la relative : complément de l'antécédent. Fonction de «&nbsp;dans laquelle&nbsp;» : complément circonstanciel de lieu du verbe «&nbsp;avaient confit&nbsp;». Effet : la relative très détaillée ralentit le rythme et fait «&nbsp;voir&nbsp;» la nourriture — c'est une technique réaliste de Maupassant pour rendre tangible la tentation."
+      },
+      {
+        type: "Négation",
+        phrase: "«&nbsp;afin de ne point toucher à la cuisine des auberges&nbsp;»",
+        question: "Analysez la négation dans cette phrase.",
+        reponse: "«&nbsp;ne…point&nbsp;» : négation totale (équivalent littéraire et renforcé de «&nbsp;ne…pas&nbsp;»). Forme affirmative : «&nbsp;afin de toucher à la cuisine des auberges.&nbsp;» La négation s'inscrit dans une subordonnée de but («&nbsp;afin de&nbsp;»). Elle révèle le souci de Boule de Suif : elle a prévu les provisions précisément pour ne pas dépendre des auberges (dont la qualité est médiocre, surtout en temps de guerre). Ironie de Maupassant : c'est la &laquo;&nbsp;fille de joie&nbsp;&raquo; qui est la plus prévoyante, tandis que les bourgeois «&nbsp;respectables&nbsp;» n'ont rien prévu."
+      },
+      {
+        type: "Subordonnée circonstancielle",
+        phrase: "«&nbsp;Le mépris des dames pour cette fille devenait féroce, comme une envie de la tuer ou de la jeter en bas de la voiture&nbsp;»",
+        question: "Analysez la circonstancielle de comparaison dans cette phrase.",
+        reponse: "«&nbsp;comme une envie de la tuer ou de la jeter en bas de la voiture&nbsp;» : proposition subordonnée circonstancielle de comparaison (ou comparative) introduite par la conjonction «&nbsp;comme&nbsp;». Fonction : complément circonstanciel de comparaison du verbe «&nbsp;devenait&nbsp;». On peut la remplacer par «&nbsp;ainsi qu'une envie de la tuer&nbsp;». Effet : la comparaison avec «&nbsp;une envie de tuer&nbsp;» est hyperbolique et violente — Maupassant exagère délibérément pour montrer l'hypocrisie féroce des «&nbsp;bonnes dames&nbsp;» qui, derrière leurs manières policées, ressentent des pulsions primitives."
+      }
+    ]
+  },
+  musset: {
+    title: "Acte II, Scène 3 – Musset",
+    questions: [
+      {
+        type: "Interrogation",
+        phrase: "«&nbsp;Croyez-vous que cela me fasse du bien, tous ces baisers que vous me donnez ?&nbsp;»",
+        question: "Analysez cette interrogation directe et transformez-la en interrogation indirecte.",
+        reponse: "Interrogation directe avec inversion du sujet («&nbsp;Croyez-vous&nbsp;»), marquée par le point d'interrogation. Transformation en indirecte : «&nbsp;Rosette demande à Perdican s'il croit que cela lui fait du bien, tous ces baisers qu'il lui donne.&nbsp;» Modifications : suppression de l'inversion, remplacement de «&nbsp;Croyez-vous que&nbsp;» par «&nbsp;demande si&nbsp;», changement des pronoms. La question directe dans la scène donne à Rosette une présence forte et directe — elle ose interpeller Perdican frontalement, ce qui est surprenant pour une paysanne face à un noble."
+      },
+      {
+        type: "Subordonnée relative",
+        phrase: "«&nbsp;De tout ce qui te plaira, de tout ce qui peut passer sur tes lèvres sans leur ôter ce sourire céleste que je respecte plus que ma vie.&nbsp;»",
+        question: "Relevez et analysez toutes les relatives dans cette réplique de Perdican.",
+        reponse: "Trois relatives : 1) «&nbsp;qui te plaira&nbsp;» — relative introduite par «&nbsp;qui&nbsp;», antécédent «&nbsp;ce&nbsp;», fonction de «&nbsp;qui&nbsp;» : sujet de «&nbsp;plaira&nbsp;». 2) «&nbsp;qui peut passer sur tes lèvres sans leur ôter ce sourire céleste&nbsp;» — relative introduite par «&nbsp;qui&nbsp;», antécédent «&nbsp;ce&nbsp;», fonction : sujet de «&nbsp;peut&nbsp;». 3) «&nbsp;que je respecte plus que ma vie&nbsp;» — relative introduite par «&nbsp;que&nbsp;», antécédent «&nbsp;ce sourire céleste&nbsp;», fonction de «&nbsp;que&nbsp;» : COD de «&nbsp;respecte&nbsp;». Effet : l'accumulation des relatives dans une même réplique montre que Perdican cherche à tout inclure, à envelopper Rosette de paroles — c'est le jeu de la séduction par les mots (thème du parcours : «&nbsp;les jeux du cœur et de la parole&nbsp;»)."
+      },
+      {
+        type: "Négation",
+        phrase: "«&nbsp;Je n'ai guère d'esprit et je m'en aperçois bien sitôt que je veux dire quelque chose.&nbsp;»",
+        question: "Analysez la négation dans la première partie de cette phrase de Rosette.",
+        reponse: "«&nbsp;n'ai guère&nbsp;» : négation partielle avec «&nbsp;guère&nbsp;» (adverbe de négation signifiant «&nbsp;peu&nbsp;» ou «&nbsp;presque pas&nbsp;»). C'est une négation atténuée — Rosette ne dit pas «&nbsp;je n'ai pas d'esprit&nbsp;» (négation totale) mais «&nbsp;je n'en ai guère&nbsp;» (très peu). Forme affirmative : «&nbsp;j'ai beaucoup d'esprit.&nbsp;» Ironie de la scène : en disant qu'elle manque d'esprit, Rosette fait preuve d'une lucidité remarquable. Musset utilise l'autodépréciation de Rosette pour montrer paradoxalement sa supériorité morale sur Perdican."
+      }
+    ]
+  }
+};
+
+function showGrammar(id) {
+  const g = grammarData[id];
+  if(!g) return;
+
+  let html = `<h2 style="font-family:'Syne',sans-serif; font-size:1.5rem; margin-bottom:0.3rem;">${g.title}</h2>
+  <p style="color:var(--muted); margin-bottom:1.5rem;">📐 Questions de grammaire · Clique pour révéler la réponse</p>`;
+
+  g.questions.forEach((q, i) => {
+    html += `
+    <div class="quiz-q" style="margin-bottom:1rem;">
+      <div style="display:flex; gap:0.7rem; align-items:center; margin-bottom:0.7rem;">
+        <span class="mvt-badge">Q${i+1}</span>
+        <span style="font-size:0.75rem; font-weight:700; color:var(--accent2);">📐 ${q.type}</span>
+      </div>
+      <div style="background:var(--surface2); border-radius:6px; padding:0.7rem; margin-bottom:0.7rem; font-size:0.85rem; font-style:italic; color:var(--muted);">${q.phrase}</div>
+      <p class="q-text">${q.question}</p>
+      <button class="show-answer-btn" onclick="toggleAnswer(this)">Voir la réponse</button>
+      <div class="q-answer">${q.reponse}</div>
+    </div>`;
+  });
+
+  document.getElementById('grammar-content').innerHTML = html;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-grammar').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleAnswer(btn) {
+  const answer = btn.nextElementSibling;
+  const visible = answer.classList.toggle('visible');
+  btn.textContent = visible ? 'Masquer la réponse' : 'Voir la réponse';
+  btn.classList.toggle('shown', visible);
+}
+</script>
+</body>
+</html>
